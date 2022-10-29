@@ -1,0 +1,28 @@
+export const convertSwitchMdToJson = (string: String)=> {
+  const result = string
+  .replace(/"/gm, '\\"')
+  .replace(/^---\n(\S)/, '{\n$1')
+  .replace(/    /gm, '  ')
+  .replace(/ \n/gm, '\n')
+  .replace(/'/gm, '')
+  .replace(/(\S+): (.+)/gm, '"$1": "$2",')
+  .replace(/(\S+):(\n)/gm, '"$1":\n')
+  .replace(/---/gm, '}')
+  .replace(/^  - (.+)\n/gm, '  "$1",\n')
+  .replace(/^    - (.+)\n/gm, '    "$1",\n')
+  .replace(/:\n  -/gm, ': [\n{')
+  .replace(/(  ".+":.+\n)(\S)/gm, '$1},\n],\n$2')
+  .replace(/  -/gm, '},\n{')
+  .replace(/(".+":\n  )"/gm, '$1 [\n  "')
+  .replace(/(  ".+photo.+",\n)"/gm, '$1],\n"')
+  .replace(/(".+force-graphs.+",)\n  /gm, '$1\n],\n  ')
+  .replace(/"null"/gm, 'null')
+  .replace(/"{  }"/gm, '{}')
+  .replace(/("force_graph": )"/gm, '$1[')
+  .replace(/("force_graph":\n    )/gm, '$1[')
+  .replace(/([[:alnum:]",:{}])/gm, '$1')
+  .replace(/,(\n})/gm, '$1')
+  .replace(/,(\n])/gm, '$1')
+
+  return JSON.parse(result)
+}
