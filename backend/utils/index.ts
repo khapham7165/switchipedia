@@ -1,28 +1,56 @@
-export const convertSwitchMdToJson = (string: String)=> {
+import fs from 'fs'
+
+export const convertSwitchMdToJson = (string: string) => {
   const result = string
-  .replace(/"/gm, '\\"')
-  .replace(/^---\n(\S)/, '{\n$1')
-  .replace(/    /gm, '  ')
-  .replace(/ \n/gm, '\n')
-  .replace(/'/gm, '')
-  .replace(/(\S+): (.+)/gm, '"$1": "$2",')
-  .replace(/(\S+):(\n)/gm, '"$1":\n')
-  .replace(/---/gm, '}')
-  .replace(/^  - (.+)\n/gm, '  "$1",\n')
-  .replace(/^    - (.+)\n/gm, '    "$1",\n')
-  .replace(/:\n  -/gm, ': [\n{')
-  .replace(/(  ".+":.+\n)(\S)/gm, '$1},\n],\n$2')
-  .replace(/  -/gm, '},\n{')
-  .replace(/(".+":\n  )"/gm, '$1 [\n  "')
-  .replace(/(  ".+photo.+",\n)"/gm, '$1],\n"')
-  .replace(/(".+force-graphs.+",)\n  /gm, '$1\n],\n  ')
-  .replace(/"null"/gm, 'null')
-  .replace(/"{  }"/gm, '{}')
-  .replace(/("force_graph": )"/gm, '$1[')
-  .replace(/("force_graph":\n    )/gm, '$1[')
-  .replace(/([[:alnum:]",:{}])/gm, '$1')
-  .replace(/,(\n})/gm, '$1')
-  .replace(/,(\n])/gm, '$1')
+    .replace(/(^---)(\n\S)/gm, '{$2') // open object
+    .replace(/^---\n/gm, '}') // end object
+    .replace(/'(.+)'\n/gm, '$1\n') // remove '(string)'
+    .replace(/"/gm, '\\"') // change quote
+    .replace(
+      /\|-\n(( +.+\n+)+)(([A-z-_0-9]+:)|})/gm,
+      (subString, g1, g2, g3) => {
+        const content = g1.replace(/\n/gm, '')
+        return `${content}\n${g3}`
+      }
+    ) // remove many line
+    .replace(/<p>(.+)<\/p>/gm, '$1') // remove html tags
+    .replace(/^(\s{1,}-\n(\s+.+\n)+)(.)/gm, '\n[\n$1],\n$3') // define array of object
+    .replace(/^(((\s{1,}(-.+\n)+))+)(.)/gm, '\n[\n$1\n],\n$5') // define array of string
+    .replace(
+      /(\s{1,})-\n((\s{1,}.+:(.+\n|\n+\[\n +(.+\n)+\n+],|\n\s+.+))+)/gm,
+      '\n$1{\n$2$1},\n'
+    ) // remove - \n
+    .replace(/^(\s{1,})- (.+)\n/gm, '\n$1"$2",\n') // remove - \n
+    .replace(/(\S+): (.+)/gm, '"$1": "$2",') // object string key and value
+    .replace(/(\S+):\n/gm, '"$1":\n') // object string key and value
+    .replace(/\n\n/gm, '\n') // object string key and value
+    .replace(/,\n( {1,}]|])/gm, '\n]') // remove last last arr ,
+    .replace(/,\n( {1,}\}|})/gm, '\n}') // remove last obj ,
+    .replace(/"null"/gm, 'null')
+    .replace(/"{( +|)}"/gm, '{}')
+    .replace(/((".+":)\n( +))/gm, '$2 null,\n$3') // add null to no value key
 
   return JSON.parse(result)
+}
+
+export const readFiles = (
+  dirname: string,
+  onFileContent: (fileName: string, content: string) => void,
+  onError: (err: Error) => void
+) => {
+  fs.readdir(dirname, function (err, filenames) {
+    if (err) {
+      onError(err)
+      return
+    }
+    filenames.forEach(function (filename) {
+      fs.readFile(dirname + filename, 'utf-8', function (err, content) {
+        if (err) {
+          onError(err)
+          return
+        }
+        onFileContent(filename, content)
+      })
+    })
+  })
 }
