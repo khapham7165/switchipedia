@@ -1,7 +1,0 @@
-services:
-  mongo:
-    hostname: switchipedia-mongo
-    image: mongo:6.0
-    ports:
-      - ${DB_PORT}:${DB_PORT}
-    restart: always

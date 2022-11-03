@@ -1,10 +1,11 @@
 import { convertSwitchMdToJson, readFiles } from './misc'
 
+import { Logger } from '@nestjs/common'
 import { SwitchModel } from '../model'
-import shell from 'shelljs'
+import { exec } from 'node:child_process'
 
 const onRead = async (fileName: string, content: string) => {
-  console.log('Converting :>> ', fileName)
+  Logger.log('Converting', fileName)
   const rawText = content
   const variant = convertSwitchMdToJson(rawText)
   const existedSwitch = await SwitchModel.findById(variant.id)
@@ -13,10 +14,10 @@ const onRead = async (fileName: string, content: string) => {
     existedSwitch.rawText = rawText
     existedSwitch
       .save()
-      .then(() => console.log('Updated :>> ', existedSwitch.variant.title))
+      .then(() => Logger.log('Updated ', existedSwitch.variant.title))
   } else {
     if (!variant.id) {
-      console.log(variant.title + 'has no ID')
+      Logger.log(variant.title + ' has no ID')
 
       return
     }
@@ -29,14 +30,12 @@ const onRead = async (fileName: string, content: string) => {
 
     newSwitch
       .save()
-      .then(() =>
-        console.log('Saved new switch :>> ', newSwitch?.variant?.title)
-      )
+      .then(() => Logger.log('Saved new switch ', newSwitch?.variant?.title))
   }
 }
 
 const onReadError = (err: Error) => {
-  console.log('err :>> ', err)
+  Logger.error('err :>> ', err)
 }
 
 export const pullSwitch = () => {
@@ -44,14 +43,15 @@ export const pullSwitch = () => {
 
   const pullChain = () => {
     const currentDir = process.cwd()
-    shell.cd(currentDir)
-    console.log('Pulling switches.mx...')
-    shell.exec('cd switches.mx && git pull')
-    readFiles(
-      './switches.mx/content/collections/switches/',
-      onRead,
-      onReadError
-    )
+    Logger.log('Pulling switches.mx...')
+    exec('cd ' + currentDir + '&& cd switches.mx && git pull', () => {
+      Logger.log('Pulling Done')
+      readFiles(
+        './src/switches.mx/content/collections/switches/',
+        onRead,
+        onReadError,
+      )
+    })
   }
 
   pullChain()
