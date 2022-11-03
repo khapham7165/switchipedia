@@ -26,9 +26,18 @@ export const convertSwitchMdToJson = (string: string) => {
     .replace(/\n\n/gm, '\n') // object string key and value
     .replace(/,\n( {1,}]|])/gm, '\n]') // remove last last arr ,
     .replace(/,\n( {1,}\}|})/gm, '\n}') // remove last obj ,
-    .replace(/"null"/gm, 'null')
-    .replace(/"{( +|)}"/gm, '{}')
+    .replace(/"null"/gm, 'null') // convert "null" -> null
+    .replace(/"{( +|)}"/gm, '{}') // convert "{ }" -> {}
     .replace(/((".+":)\n( +))/gm, '$2 null,\n$3') // add null to no value key
+    .replace(
+      /(".+": )"(([0-9]{1,}|)(\.|)[0-9]{1,})"/gm,
+      (subString, g1, g2, g3, g4) => {
+        let result = `${g1}${g2}` // to number
+        if (!g3 && g4) result = `${g1}0${g2}` // .32 -> 0.32
+
+        return result
+      }
+    ) // convert "number" -> number
 
   return JSON.parse(result)
 }

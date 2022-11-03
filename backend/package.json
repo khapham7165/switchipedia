@@ -13,8 +13,10 @@
   "license": "ISC",
   "devDependencies": {
     "@types/node": "^18.11.7",
+    "@types/shelljs": "^0.8.11",
     "@typescript-eslint/eslint-plugin": "^5.41.0",
     "@typescript-eslint/parser": "^5.41.0",
+    "shelljs": "^0.8.5",
     "eslint": "^8.26.0",
     "eslint-config-prettier": "^8.5.0",
     "eslint-plugin-prettier": "^4.2.1",
@@ -23,6 +25,8 @@
     "typescript": "*"
   },
   "dependencies": {
+    "@types/lodash": "^4.14.187",
+    "lodash": "^4.17.21",
     "mongoose": "^6.7.0"
   }
 }
