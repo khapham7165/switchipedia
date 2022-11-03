@@ -38,7 +38,7 @@ const onReadError = (err: Error) => {
   Logger.error('err :>> ', err)
 }
 
-export const pullSwitch = () => {
+export const pullSwitch = (timer?: number) => {
   // Service started from here ----------------------------------------------
 
   const pullChain = () => {
@@ -55,6 +55,6 @@ export const pullSwitch = () => {
   }
 
   pullChain()
-  // Update switches into DB every day
-  setInterval(pullChain, 1000 * 60 * 60 * 24)
+  // Update switches into DB every 'timer' || day
+  setInterval(pullChain, timer || 1000 * 60 * 60 * 24)
 }
