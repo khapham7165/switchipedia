@@ -40,17 +40,27 @@ const onReadError = (err: Error) => {
 
 export const pullSwitch = (timer?: number) => {
   // Service started from here ----------------------------------------------
-
   const pullChain = () => {
-    const currentDir = process.cwd()
+    const currentDir = process.cwd() + '/src'
     Logger.log('Pulling switches.mx...')
-    exec('cd ' + currentDir + '&& cd switches.mx && git pull', () => {
-      Logger.log('Pulling Done')
-      readFiles(
-        './src/switches.mx/content/collections/switches/',
-        onRead,
-        onReadError,
-      )
+    exec('cd ' + currentDir + ' && cd switches.mx && git pull', (exception) => {
+      if (exception) {
+        Logger.log(exception)
+        Logger.log('Pulling Repo...')
+        exec(
+          'cd ' +
+            currentDir +
+            ' && git clone https://github.com/BWLR/switches.mx.git',
+          (exception) => !exception && pullChain()
+        )
+      } else {
+        Logger.log('Pulling Done')
+        readFiles(
+          './src/switches.mx/content/collections/switches/',
+          onRead,
+          onReadError
+        )
+      }
     })
   }
 

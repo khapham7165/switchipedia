@@ -6,13 +6,10 @@ import { pullSwitch } from 'src/utils'
 
 async function bootstrap() {
   const app = await NestFactory.create(AppModule)
-  console.log(
-    'process.env.DB_URL_CONNECTION :>> ',
-    process.env.DB_URL_CONNECTION,
-  )
+
   // Connect to DB server
   await mongoose.connect(
-    `mongodb://${process.env.DB_HOST}:${process.env.DB_PORT}/${process.env.DB_NAME}`,
+    `mongodb://${process.env.DB_HOST}:${process.env.DB_PORT}/${process.env.DB_NAME}`
   )
   try {
     // Pulling data
