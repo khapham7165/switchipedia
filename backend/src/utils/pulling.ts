@@ -1,41 +1,95 @@
 import { convertSwitchMdToJson, readFiles } from './misc'
 
 import { Logger } from '@nestjs/common'
-import { SwitchModel } from '../model'
+import {
+  BrandModel,
+  ManufacturerModel,
+  SwitchModel,
+  SwitchTypeModel,
+} from '../model'
 import { exec } from 'node:child_process'
+import { Model } from 'mongoose'
+import { isEmpty } from 'lodash'
+
+const checkExisted = async (model: Model<any>, item: Record<string, any>) => {
+  let existedManufacture = await model.findOne(item)
+
+  if (!existedManufacture) {
+    existedManufacture = new model(item)
+    await existedManufacture.save()
+    Logger.log(`New ${model.modelName}: ` + JSON.stringify(item))
+  }
+
+  return existedManufacture
+}
 
 const onRead = async (fileName: string, content: string) => {
-  Logger.log('Converting', fileName)
+  Logger.log('Converting ' + fileName)
   const rawText = content
   const variant = convertSwitchMdToJson(rawText)
-  const existedSwitch = await SwitchModel.findById(variant.id)
+
+  const { manufacturer, brand, specs, switchType, title } = variant
+
+  // manufacture
+
+  const checkedManufacturer = await checkExisted(ManufacturerModel, {
+    name: manufacturer,
+  })
+
+  // brand
+
+  const checkedBrand = await checkExisted(BrandModel, {
+    name: brand,
+  })
+
+  // switchType
+  const checkedSwitchType = await checkExisted(SwitchTypeModel, {
+    name: switchType,
+  })
+
+  const switchSet = {
+    ...variant,
+    manufacturer: checkedManufacturer,
+    brand: checkedBrand,
+    switchType: checkedSwitchType,
+    specs: {
+      ...specs[0],
+      forceGraph: isEmpty(specs[0].forceGraph)
+        ? undefined
+        : specs[0].forceGraph,
+    },
+    thereminGoatScores:
+      variant.thereminGoatScores?.[0] || variant.thereminGoatScores,
+    rawText,
+    variant,
+  }
+
+  const existedSwitch = await SwitchModel.findOne({ title })
+
   if (existedSwitch) {
-    existedSwitch.variant = variant
+    await SwitchModel.updateOne(
+      { _id: existedSwitch._id },
+      {
+        $set: switchSet,
+      },
+    )
     existedSwitch.rawText = rawText
     existedSwitch
       .save()
-      .then(() => Logger.log('Updated ', existedSwitch.variant.title))
+      .then(() => Logger.log('Updated - ' + existedSwitch.variant.title))
   } else {
-    if (!variant.id) {
+    if (!variant.title) {
       Logger.log(variant.title + ' has no ID')
 
       return
     }
 
-    const newSwitch = new SwitchModel({
-      _id: variant.id,
-      rawText,
-      variant,
-    })
+    const newSwitch = new SwitchModel(switchSet)
 
     newSwitch
       .save()
-      .then(() => Logger.log('Saved new switch ', newSwitch?.variant?.title))
+      .then(() => Logger.log('Saved new switch - ' + newSwitch?.variant?.title))
   }
-}
-
-const onReadError = (err: Error) => {
-  Logger.error('err :>> ', err)
 }
 
 export const pullSwitch = (timer?: number) => {
@@ -51,15 +105,11 @@ export const pullSwitch = (timer?: number) => {
           'cd ' +
             currentDir +
             ' && git clone https://github.com/BWLR/switches.mx.git',
-          (exception) => !exception && pullChain()
+          (exception) => !exception && pullChain(),
         )
       } else {
         Logger.log('Pulling Done')
-        readFiles(
-          './src/switches.mx/content/collections/switches/',
-          onRead,
-          onReadError
-        )
+        readFiles('./src/switches.mx/content/collections/switches/', onRead)
       }
     })
   }
