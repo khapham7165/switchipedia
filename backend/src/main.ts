@@ -9,7 +9,7 @@ async function bootstrap() {
 
   // Connect to DB server
   await mongoose.connect(
-    `mongodb://${process.env.DB_HOST}:${process.env.DB_PORT}/${process.env.DB_NAME}`
+    `mongodb://${process.env.DB_HOST}:${process.env.DB_PORT}/${process.env.DB_NAME}`,
   )
   try {
     // Pulling data
