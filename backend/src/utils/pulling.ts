@@ -6,7 +6,7 @@ import {
   ManufacturerModel,
   SwitchModel,
   SwitchTypeModel,
-} from '../model'
+} from '../mongo/models'
 import { exec } from 'node:child_process'
 import { Model } from 'mongoose'
 import { isEmpty } from 'lodash'

@@ -4,7 +4,7 @@ import {
   manufacturerSchema,
   switchTypeSchema,
   brandSchema,
-} from 'src/schema'
+} from 'src/mongo/schemas'
 
 export const SwitchModel = mongoose.model('Switch', switchSchema)
 export const ManufacturerModel = mongoose.model(
