@@ -114,7 +114,6 @@ export const pullSwitch = (timer?: number) => {
     })
   }
 
-  pullChain()
   // Update switches into DB every 'timer' || day
   setInterval(pullChain, timer || 1000 * 60 * 60 * 24)
 }

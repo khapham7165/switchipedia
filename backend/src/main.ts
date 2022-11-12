@@ -19,5 +19,6 @@ async function bootstrap() {
   }
 
   await app.listen(process.env.APP_PORT)
+  Logger.log('Listening on port ' + process.env.APP_PORT, 'App')
 }
 bootstrap()
