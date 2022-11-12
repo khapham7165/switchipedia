@@ -10,6 +10,7 @@
   },
   "dependencies": {
     "@expo/webpack-config": "^0.17.2",
+    "antd-mobile": "^5.25.1",
     "expo": "~47.0.3",
     "expo-status-bar": "~1.4.2",
     "react": "18.1.0",
