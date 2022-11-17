@@ -12,7 +12,7 @@ export const COLORS = {
   ERROR: '#eb4242',
 }
 
-export default StyleSheet.create({
+export const s = StyleSheet.create({
   // padding
   p2: {
     padding: 2,
@@ -56,9 +56,11 @@ export default StyleSheet.create({
   // stroke
   strokeSm: {
     borderWidth: 1,
+    borderColor: COLORS.BLACK_BERRY,
   },
   strokeMd: {
     borderWidth: 2,
+    borderColor: COLORS.BLACK_BERRY,
   },
   strokeLg: {
     borderWidth: 4,
