@@ -65,4 +65,10 @@ export const s = StyleSheet.create({
   strokeLg: {
     borderWidth: 4,
   },
+
+  center: {
+    flex: 1,
+    alignItems: 'center',
+    justifyContent: 'center',
+  },
 })

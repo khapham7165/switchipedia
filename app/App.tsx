@@ -1,7 +1,9 @@
 import React from 'react'
-import { StyleSheet, View } from 'react-native'
+import { View } from 'react-native'
 import { Text, Button } from './components'
 import { useFonts } from 'expo-font'
+import { SafeArea } from 'antd-mobile'
+import { s } from './Styles'
 
 export default function App() {
   const [fontsLoaded] = useFonts({
@@ -36,7 +38,8 @@ export default function App() {
 
   if (!fontsLoaded) return <View>Loading fonts</View>
   return (
-    <View style={styles.container}>
+    <View style={s.center}>
+      <SafeArea position={'top'} />
       <Text h1>This is Headline 1</Text>
       <Text h2>This is Headline 2</Text>
       <Text h3>This is Headline 3</Text>
@@ -62,16 +65,24 @@ export default function App() {
       <Text l3>This is Label 3</Text>
       <Text l4>This is Label 4</Text>
       <Text l5>This is Label 5</Text>
-      <Button>Button</Button>
+      <Button>Primary Button</Button>
+      <Button active>Active Primary Button</Button>
+      <Button disabled>Disabled Primary Button</Button>
+      <Button btnType={'secondary'}>Secondary Button</Button>
+      <Button active btnType={'secondary'}>
+        Active Secondary Button
+      </Button>
+      <Button disabled btnType={'secondary'}>
+        Disabled Secondary Button
+      </Button>
+      <Button loading>Button</Button>
+      <Button disabled loading>
+        Button
+      </Button>
+      <Button btnType="secondary" disabled loading>
+        Button
+      </Button>
+      <SafeArea position={'bottom'} />
     </View>
   )
 }
-
-const styles = StyleSheet.create({
-  container: {
-    alignItems: 'center',
-    backgroundColor: '#fff',
-    flex: 1,
-    justifyContent: 'center',
-  },
-})
