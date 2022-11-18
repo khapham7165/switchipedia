@@ -1,10 +1,8 @@
 import React from 'react'
 import {
   Text as NativeText,
-  ViewProps,
   TextProps as NativeTextProps,
   StyleSheet,
-  TextStyle,
 } from 'react-native'
 
 type TextProps = NativeTextProps & {
@@ -83,6 +81,7 @@ export const Text = (props: TextProps) => {
         ...(l5 && styles.l5),
         ...(bold && styles.bold),
         ...(italic && styles.italic),
+        ...(props.style as object),
       }}
     />
   )

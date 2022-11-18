@@ -1,29 +1,29 @@
 import {
-  Button as NativeButton,
-  ButtonProps as NativeButtonProps,
   StyleSheet,
   TouchableWithoutFeedback,
+  TouchableWithoutFeedbackProps,
   View,
 } from 'react-native'
-import {
-  Button as AntButton,
-  ButtonProps as AtnButtonProps,
-  Image,
-} from 'antd-mobile'
-import React, { CSSProperties, useState } from 'react'
+import React, { useState } from 'react'
 import { COLORS } from '../Styles'
 import { Text } from './text'
-import { ArrowLeftOutlined, ArrowRightOutlined } from '@ant-design/icons'
+import styled from 'styled-components/native'
 
-type ButtonProps = AtnButtonProps & {
+type ButtonProps = TouchableWithoutFeedbackProps & {
   btnType?: 'primary' | 'secondary'
-  disabled?: boolean
   iconOnly?: boolean
   icon?: any
   leftIcon?: boolean
   rightIcon?: boolean
   active?: boolean
+  loading?: boolean
 }
+
+const ButtonContent = styled(View)`
+  display: flex;
+  align-items: 'center';
+  justify-content: 'center';
+`
 
 export const Button = (props: ButtonProps) => {
   const {
@@ -36,51 +36,61 @@ export const Button = (props: ButtonProps) => {
   const [isTouch, setIsTouch] = useState(false)
 
   return (
-    <View
-      style={{
-        backgroundColor: props.disabled
-          ? COLORS.DISABLED
-          : isTouch || active
-          ? COLORS.GOJI_BERRY
-          : COLORS.BLACK_BERRY,
-        padding: active ? 2 : 1,
-        borderRadius: 4,
+    <TouchableWithoutFeedback
+      {...props}
+      onPressIn={(e) => {
+        setIsTouch(true)
+        props.onPressIn?.(e)
+      }}
+      onPressOut={(e) => {
+        setIsTouch(false)
+        props.onPressOut?.(e)
       }}
     >
-      <AntButton
-        {...props}
-        onMouseDown={() => {
-          setIsTouch(true)
+      <View
+        style={{
+          backgroundColor: props.disabled
+            ? COLORS.DISABLED
+            : isTouch || active
+            ? COLORS.GOJI_BERRY
+            : COLORS.BLACK_BERRY,
+          padding: active ? 2 : 1,
+          borderRadius: 4,
         }}
-        onMouseUp={() => {
-          setIsTouch(false)
-        }}
-        style={props.disabled ? styles[`${btnType}Disabled`] : styles[btnType]}
       >
-        <View style={styles.content}>
-          {leftIcon && <ArrowLeftOutlined />}
-          <Text b1>{props.children}</Text>
-          {rightIcon && <ArrowRightOutlined />}
+        <View
+          style={
+            props.disabled ? styles[`${btnType}Disabled`] : styles[btnType]
+          }
+        >
+          <Text
+            style={{
+              color: (props.disabled
+                ? styles[`${btnType}Disabled`]
+                : styles[btnType]
+              ).color,
+            }}
+            b1
+          >
+            {props.children}
+          </Text>
         </View>
-      </AntButton>
-    </View>
+      </View>
+    </TouchableWithoutFeedback>
   )
 }
 
-const defaultButtonTypeStyle: any = {
+const defaultButtonTypeStyle: TouchableWithoutFeedbackProps['style'] = {
   minWidth: 358,
   minHeight: 56,
+  alignItems: 'center',
+  justifyContent: 'center',
   borderWidth: 2,
   opacity: 1,
   borderRadius: 4,
 }
 
 const styles = StyleSheet.create({
-  content: {
-    flex: 1,
-    flexDirection: 'row',
-    justifyContent: 'space-between',
-  },
   primary: {
     ...defaultButtonTypeStyle,
     backgroundColor: COLORS.BLACK_BERRY,

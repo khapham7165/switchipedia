@@ -14,5 +14,6 @@ module.exports = function (api) {
         },
       ],
     ],
+    plugins: [['import', { libraryName: '@ant-design/react-native' }]],
   }
 }
