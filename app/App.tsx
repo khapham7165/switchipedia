@@ -1,45 +1,19 @@
 import React from 'react'
 import { SafeAreaView, ScrollView, View } from 'react-native'
-import { Text, Button, HugButton } from './components'
+import { Text, Button, HugButton, SplashScreen, BodyView } from './components'
 import { useFonts } from 'expo-font'
-import { s } from './Styles'
+import { COLORS, s } from './Styles'
 import { Card, CardType } from './components/card'
+import { NavigationContainer } from '@react-navigation/native'
+import { createBottomTabNavigator } from '@react-navigation/bottom-tabs'
+import { BottomTab } from './components/bottom-tab'
 
-export default function App() {
-  const [fontsLoaded] = useFonts({
-    // satoshi
-    SatoshiLight: require('./assets/fonts/satoshi/Satoshi-Light.ttf'), // 300
-    SatoshiLightItalic: require('./assets/fonts/satoshi/Satoshi-LightItalic.ttf'), // 300
-    SatoshiRegular: require('./assets/fonts/satoshi/Satoshi-Regular.ttf'), // 400
-    SatoshiItalic: require('./assets/fonts/satoshi/Satoshi-Italic.ttf'), // 400
-    SatoshiMedium: require('./assets/fonts/satoshi/Satoshi-Medium.ttf'), // 500
-    SatoshiMediumItalic: require('./assets/fonts/satoshi/Satoshi-MediumItalic.ttf'), // 500
-    SatoshiVariable: require('./assets/fonts/satoshi/Satoshi-Variable.ttf'), // 600
-    SatoshiVariableItalic: require('./assets/fonts/satoshi/Satoshi-VariableItalic.ttf'), // 600
-    SatoshiBold: require('./assets/fonts/satoshi/Satoshi-Bold.ttf'), // 700
-    SatoshiBoldItalic: require('./assets/fonts/satoshi/Satoshi-BoldItalic.ttf'), // 700
-    SatoshiBlack: require('./assets/fonts/satoshi/Satoshi-Black.ttf'), // 900
-    SatoshiBlackItalic: require('./assets/fonts/satoshi/Satoshi-BlackItalic.ttf'), // 900
+const Tab = createBottomTabNavigator()
 
-    // roboto
-    RobotoLight: require('./assets/fonts/roboto/Roboto-Light.ttf'), // 300
-    RobotoLightItalic: require('./assets/fonts/roboto/Roboto-LightItalic.ttf'), // 300
-    RobotoRegular: require('./assets/fonts/roboto/Roboto-Regular.ttf'), // 400
-    RobotoItalic: require('./assets/fonts/roboto/Roboto-Italic.ttf'), // 400
-    RobotoMedium: require('./assets/fonts/roboto/Roboto-Medium.ttf'), // 500
-    RobotoMediumItalic: require('./assets/fonts/roboto/Roboto-MediumItalic.ttf'), // 500
-    RobotoThin: require('./assets/fonts/roboto/Roboto-Thin.ttf'), // 600
-    RobotoThinItalic: require('./assets/fonts/roboto/Roboto-ThinItalic.ttf'), // 600
-    RobotoBold: require('./assets/fonts/roboto/Roboto-Bold.ttf'), // 700
-    RobotoBoldItalic: require('./assets/fonts/roboto/Roboto-BoldItalic.ttf'), // 700
-    RobotoBlack: require('./assets/fonts/roboto/Roboto-Black.ttf'), // 900
-    RobotoBlackItalic: require('./assets/fonts/roboto/Roboto-BlackItalic.ttf'), // 900
-  })
-
-  if (!fontsLoaded) return <View></View>
+const Components = () => {
   return (
-    <SafeAreaView>
-      <View>
+    <ScrollView>
+      <BodyView>
         <Text h1>This is Headline 1</Text>
         <Text h2>This is Headline 2</Text>
         <Text h3>This is Headline 3</Text>
@@ -98,7 +72,57 @@ export default function App() {
           description="Vertical Card Description"
           info="Vertical Card Info"
         />
-      </View>
-    </SafeAreaView>
+      </BodyView>
+    </ScrollView>
+  )
+}
+
+const Home = () => {
+  return (
+    <View>
+      <Text>Home</Text>
+    </View>
+  )
+}
+
+export default function App() {
+  const [fontsLoaded] = useFonts({
+    // satoshi
+    SatoshiLight: require('./assets/fonts/satoshi/Satoshi-Light.ttf'), // 300
+    SatoshiLightItalic: require('./assets/fonts/satoshi/Satoshi-LightItalic.ttf'), // 300
+    SatoshiRegular: require('./assets/fonts/satoshi/Satoshi-Regular.ttf'), // 400
+    SatoshiItalic: require('./assets/fonts/satoshi/Satoshi-Italic.ttf'), // 400
+    SatoshiMedium: require('./assets/fonts/satoshi/Satoshi-Medium.ttf'), // 500
+    SatoshiMediumItalic: require('./assets/fonts/satoshi/Satoshi-MediumItalic.ttf'), // 500
+    SatoshiVariable: require('./assets/fonts/satoshi/Satoshi-Variable.ttf'), // 600
+    SatoshiVariableItalic: require('./assets/fonts/satoshi/Satoshi-VariableItalic.ttf'), // 600
+    SatoshiBold: require('./assets/fonts/satoshi/Satoshi-Bold.ttf'), // 700
+    SatoshiBoldItalic: require('./assets/fonts/satoshi/Satoshi-BoldItalic.ttf'), // 700
+    SatoshiBlack: require('./assets/fonts/satoshi/Satoshi-Black.ttf'), // 900
+    SatoshiBlackItalic: require('./assets/fonts/satoshi/Satoshi-BlackItalic.ttf'), // 900
+
+    // roboto
+    RobotoLight: require('./assets/fonts/roboto/Roboto-Light.ttf'), // 300
+    RobotoLightItalic: require('./assets/fonts/roboto/Roboto-LightItalic.ttf'), // 300
+    RobotoRegular: require('./assets/fonts/roboto/Roboto-Regular.ttf'), // 400
+    RobotoItalic: require('./assets/fonts/roboto/Roboto-Italic.ttf'), // 400
+    RobotoMedium: require('./assets/fonts/roboto/Roboto-Medium.ttf'), // 500
+    RobotoMediumItalic: require('./assets/fonts/roboto/Roboto-MediumItalic.ttf'), // 500
+    RobotoThin: require('./assets/fonts/roboto/Roboto-Thin.ttf'), // 600
+    RobotoThinItalic: require('./assets/fonts/roboto/Roboto-ThinItalic.ttf'), // 600
+    RobotoBold: require('./assets/fonts/roboto/Roboto-Bold.ttf'), // 700
+    RobotoBoldItalic: require('./assets/fonts/roboto/Roboto-BoldItalic.ttf'), // 700
+    RobotoBlack: require('./assets/fonts/roboto/Roboto-Black.ttf'), // 900
+    RobotoBlackItalic: require('./assets/fonts/roboto/Roboto-BlackItalic.ttf'), // 900
+  })
+
+  if (!fontsLoaded) return <SplashScreen />
+  return (
+    <NavigationContainer>
+      <Tab.Navigator tabBar={(props) => <BottomTab {...props} />}>
+        <Tab.Screen name="Home" component={Home} />
+        <Tab.Screen name="Components" component={Components} />
+      </Tab.Navigator>
+    </NavigationContainer>
   )
 }

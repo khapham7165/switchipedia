@@ -4,6 +4,7 @@ import styled from 'styled-components/native'
 import { COLORS } from '../Styles'
 import { Text } from './text'
 import { Entypo } from '@expo/vector-icons'
+import { AntDesign } from '@expo/vector-icons'
 
 export enum CardType {
   Horizontal = 'Horizontal',
@@ -20,7 +21,7 @@ type CardProps = {
 
 const CARD_BORDER = '8px'
 const MIN_CARD_HEIGHT = '146px'
-const SHADOW_WIDTH = '2px'
+const SHADOW_WIDTH = '3px'
 
 const ImageView = styled.View`
   border-radius: 6px;
@@ -70,7 +71,6 @@ const TitleView = styled.View`
 const VerticalCardView = styled(CardView)`
   flex-direction: column;
   min-width: 100%;
-  min-height: 384px;
 `
 
 const VerticalImageView = styled(ImageView)`
@@ -80,12 +80,18 @@ const VerticalImageView = styled(ImageView)`
 const VerticalContentView = styled(ContentView)`
   gap: 12px;
   padding: 20px 16px;
+  min-height: 148px;
 `
 
 const VerticalTitleView = styled.View`
   gap: 4px;
 `
 
+const IconContainerView = styled.View`
+  width: 28px;
+  align-items: center;
+  justify-content: center;
+`
 export const Card = (props: CardProps) => {
   const {
     type = CardType.Horizontal,
@@ -120,6 +126,9 @@ export const Card = (props: CardProps) => {
                 {description}
               </Text>
             </ContentView>
+            <IconContainerView>
+              <AntDesign name="right" size={12.5} color={COLORS.BLACK_BERRY} />
+            </IconContainerView>
           </CardView>
         )
 
@@ -142,7 +151,7 @@ export const Card = (props: CardProps) => {
                   {info}
                 </Text>
               </VerticalTitleView>
-              <Text p2 numberOfLines={2} ellipsizeMode="tail">
+              <Text p1 numberOfLines={2} ellipsizeMode="tail">
                 {description}
               </Text>
             </VerticalContentView>
