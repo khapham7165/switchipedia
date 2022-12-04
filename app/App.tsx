@@ -1,8 +1,9 @@
 import React from 'react'
 import { SafeAreaView, ScrollView, View } from 'react-native'
-import { Text, Button } from './components'
+import { Text, Button, HugButton } from './components'
 import { useFonts } from 'expo-font'
 import { s } from './Styles'
+import { Card, CardType } from './components/card'
 
 export default function App() {
   const [fontsLoaded] = useFonts({
@@ -38,7 +39,7 @@ export default function App() {
   if (!fontsLoaded) return <View></View>
   return (
     <SafeAreaView>
-      <ScrollView>
+      <View>
         <Text h1>This is Headline 1</Text>
         <Text h2>This is Headline 2</Text>
         <Text h3>This is Headline 3</Text>
@@ -64,9 +65,11 @@ export default function App() {
         <Text l3>This is Label 3</Text>
         <Text l4>This is Label 4</Text>
         <Text l5>This is Label 5</Text>
+
         <Button>Primary Button</Button>
         <Button active>Active Primary Button</Button>
         <Button disabled>Disabled Primary Button</Button>
+
         <Button btnType={'secondary'}>Secondary Button</Button>
         <Button active btnType={'secondary'}>
           Active Secondary Button
@@ -74,6 +77,7 @@ export default function App() {
         <Button disabled btnType={'secondary'}>
           Disabled Secondary Button
         </Button>
+
         <Button loading>Button</Button>
         <Button disabled loading>
           Button
@@ -81,7 +85,20 @@ export default function App() {
         <Button btnType="secondary" disabled loading>
           Button
         </Button>
-      </ScrollView>
+
+        <Card
+          type={CardType.Horizontal}
+          title="Horizontal Card Title"
+          description="Horizontal Card Description"
+          info="Horizontal Card Info"
+        />
+        <Card
+          type={CardType.Vertical}
+          title="Vertical Card Title"
+          description="Vertical Card Description"
+          info="Vertical Card Info"
+        />
+      </View>
     </SafeAreaView>
   )
 }

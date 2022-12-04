@@ -7,31 +7,18 @@ import {
 import React, { useState } from 'react'
 import { COLORS } from '../Styles'
 import { Text } from './text'
-import styled from 'styled-components/native'
+import styled from 'styled-components'
 
 type ButtonProps = TouchableWithoutFeedbackProps & {
   btnType?: 'primary' | 'secondary'
   iconOnly?: boolean
   icon?: any
-  leftIcon?: boolean
-  rightIcon?: boolean
   active?: boolean
   loading?: boolean
 }
 
-const ButtonContent = styled(View)`
-  display: flex;
-  align-items: 'center';
-  justify-content: 'center';
-`
-
 export const Button = (props: ButtonProps) => {
-  const {
-    leftIcon = true,
-    rightIcon = true,
-    active,
-    btnType = 'primary',
-  } = props
+  const { active, btnType = 'primary' } = props
 
   const [isTouch, setIsTouch] = useState(false)
 
@@ -81,12 +68,10 @@ export const Button = (props: ButtonProps) => {
 }
 
 const defaultButtonTypeStyle: TouchableWithoutFeedbackProps['style'] = {
-  minWidth: 358,
-  minHeight: 56,
+  padding: 16,
   alignItems: 'center',
   justifyContent: 'center',
   borderWidth: 2,
-  opacity: 1,
   borderRadius: 4,
 }
 
@@ -116,3 +101,7 @@ const styles = StyleSheet.create({
     borderColor: COLORS.DISABLED,
   },
 })
+
+export const HugButton = styled(Button)`
+  width: 100;
+`

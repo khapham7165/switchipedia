@@ -5,6 +5,10 @@
     "strict": true,
     "types": [
       "@types/styled-components-react-native"
-    ]
+    ],
+    "baseUrl": "./",
+    "paths": {
+      "*": ["./*"]
+    }
   }
 }
