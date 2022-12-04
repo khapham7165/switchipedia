@@ -1,3 +1,4 @@
+import { Logger } from '@nestjs/common'
 import * as fs from 'fs'
 
 export const convertSwitchMdToJson = (string: string) => {
@@ -43,8 +44,17 @@ export const convertSwitchMdToJson = (string: string) => {
         letter.toUpperCase(),
       )}${g3}`
     }) // convert 'this-is_key' -> 'thisIsKey'
+    // Special case
+    .replace(/(.+|)(,)(.+|)}/gm, `$1$3}`) // ],  } remove ,
 
-  return JSON.parse(result)
+  try {
+    return JSON.parse(result)
+  } catch (err) {
+    Logger.error(err)
+    Logger.error(result)
+  }
+
+  return null
 }
 
 export const readFiles = async (

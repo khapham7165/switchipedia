@@ -28,6 +28,8 @@ const onRead = async (fileName: string, content: string) => {
   const rawText = content
   const variant = convertSwitchMdToJson(rawText)
 
+  if (!variant) return
+
   const { manufacturer, brand, specs, switchType, title } = variant
 
   // manufacture
@@ -114,6 +116,8 @@ export const pullSwitch = (timer?: number) => {
     })
   }
 
+  // Start pulling after call
+  pullChain()
   // Update switches into DB every 'timer' || day
   setInterval(pullChain, timer || 1000 * 60 * 60 * 24)
 }
