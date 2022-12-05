@@ -3,9 +3,9 @@ import { View } from 'react-native'
 import { useFonts } from 'expo-font'
 import { NavigationContainer } from '@react-navigation/native'
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs'
-import { Text, SplashScreen, BottomTab } from '@components'
-import { Components } from '@screens'
-import { APP_FONTS } from '@configs'
+import { Text, SplashScreen, BottomTab } from './src/components'
+import { Components } from './src/screens'
+import { APP_FONTS } from './src/configs'
 
 const Tab = createBottomTabNavigator()
 

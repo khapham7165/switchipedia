@@ -1,7 +1,7 @@
 import React, { useCallback, useMemo } from 'react'
 import { BottomTabBarProps } from '@react-navigation/bottom-tabs'
 import styled from 'styled-components/native'
-import { COLORS } from '../Styles'
+import { COLORS } from '../styles'
 import { Ionicons } from '@expo/vector-icons'
 import { Text } from './text'
 

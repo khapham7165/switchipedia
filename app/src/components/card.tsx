@@ -1,7 +1,7 @@
 import React from 'react'
 import { Image, ImageSourcePropType } from 'react-native'
 import styled from 'styled-components/native'
-import { COLORS } from '../Styles'
+import { COLORS } from '../styles'
 import { Text } from './text'
 import { Entypo } from '@expo/vector-icons'
 import { AntDesign } from '@expo/vector-icons'

@@ -4,13 +4,9 @@
     "jsx": "react",
     "strict": true,
     "types": [
-      "@types/styled-components-react-native"
+      "@types/styled-components-react-native",
+      "node"
     ],
     "baseUrl": "./",
-    "paths": {
-      "@components": ["src/components"],
-      "@screens": ["src/screens"],
-      "@configs": ["src/configs"]
-    }
   }
 }

@@ -5,9 +5,10 @@ import {
   View,
 } from 'react-native'
 import React, { useState } from 'react'
-import { COLORS } from '../Styles'
+import { COLORS } from '../styles'
 import { Text } from './text'
-import styled from 'styled-components'
+import styled from 'styled-components/native'
+import { useMemo } from 'react'
 
 type ButtonProps = TouchableWithoutFeedbackProps & {
   btnType?: 'primary' | 'secondary'
@@ -18,7 +19,7 @@ type ButtonProps = TouchableWithoutFeedbackProps & {
 }
 
 export const Button = (props: ButtonProps) => {
-  const { active, btnType = 'primary' } = props
+  const { active, btnType = 'primary', disabled } = props
 
   const [isTouch, setIsTouch] = useState(false)
 

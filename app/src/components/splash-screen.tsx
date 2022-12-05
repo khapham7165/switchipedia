@@ -1,6 +1,6 @@
 import React from 'react'
 import { CenteredView } from './view'
-import { COLORS } from '../../Styles'
+import { COLORS } from '../styles'
 import { Text } from 'react-native'
 
 type SplashScreenProps = {

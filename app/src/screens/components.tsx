@@ -1,6 +1,6 @@
+import { BodyView, Card, CardType, Text, Button } from '../components'
 import React from 'react'
 import { ScrollView } from 'react-native'
-import { BodyView, Button, Card, CardType, Text } from '@components'
 
 export const Components = () => {
   return (
