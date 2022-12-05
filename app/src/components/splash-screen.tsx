@@ -1,7 +1,7 @@
 import React from 'react'
 import { CenteredView } from './view'
-import { COLORS } from '../Styles'
-import { Image, Text } from 'react-native'
+import { COLORS } from '../../Styles'
+import { Text } from 'react-native'
 
 type SplashScreenProps = {
   data?: any
