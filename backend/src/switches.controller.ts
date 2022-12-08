@@ -5,7 +5,9 @@ import { SwitchModel } from 'src/mongo/models'
 export class SwitchesController {
   @Get('/all')
   findAll(): any {
-    return SwitchModel.find().populate(['manufacturer', 'brand', 'switchType'])
+    return SwitchModel.find()
+      .populate(['manufacturer', 'brand', 'switchType'])
+      .select('-variant')
   }
 
   @Get(':id')

@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useCallback, useEffect, useState } from 'react'
 import { View } from 'react-native'
 import { useFonts } from 'expo-font'
 import { NavigationContainer } from '@react-navigation/native'
@@ -9,19 +9,13 @@ import {
   BottomTabHeader,
   BodyView,
 } from './src/components'
-import { Components } from './src/screens'
+import { Components, SwitchList } from './src/screens'
 import { APP_FONTS } from './src/configs'
+import { getHttp } from './src/utils'
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs'
 
 const Tab = createBottomTabNavigator()
 const { Navigator, Screen } = Tab
-const Home = () => {
-  return (
-    <BodyView>
-      <Text>Home</Text>
-    </BodyView>
-  )
-}
 
 export default function App() {
   const [fontsLoaded] = useFonts(APP_FONTS)
@@ -33,7 +27,7 @@ export default function App() {
       <Navigator tabBar={(props) => <BottomTab {...props} />}>
         <Screen
           name="Home"
-          component={Home}
+          component={SwitchList}
           options={{
             header: (props) => <BottomTabHeader {...props} />,
           }}

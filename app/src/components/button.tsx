@@ -21,13 +21,17 @@ type ButtonProps = TouchableWithoutFeedbackProps & {
   disabled?: boolean
 }
 
+const Touchable = styled.TouchableWithoutFeedback`
+  cursor: pointer;
+`
+
 export const Button = (props: ButtonProps) => {
   const { active, btnType = 'primary', disabled = false } = props
 
   const [isTouch, setIsTouch] = useState(false)
 
   return (
-    <TouchableWithoutFeedback
+    <Touchable
       {...props}
       onPressIn={(e) => {
         setIsTouch(true)
@@ -72,7 +76,7 @@ export const Button = (props: ButtonProps) => {
           </Text>
         </View>
       </View>
-    </TouchableWithoutFeedback>
+    </Touchable>
   )
 }
 

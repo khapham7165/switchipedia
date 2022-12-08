@@ -8,9 +8,14 @@ async function bootstrap() {
   const app = await NestFactory.create(AppModule)
 
   // Connect to DB server
-  await mongoose.connect(
-    `mongodb://${process.env.DB_HOST}:${process.env.DB_PORT}/${process.env.DB_NAME}`,
-  )
+  try {
+    await mongoose.connect(
+      `mongodb://${process.env.DB_HOST}:${process.env.DB_PORT}/${process.env.DB_NAME}`,
+    )
+  } catch (error) {
+    Logger.error('Cannot connect to DB', error)
+  }
+
   try {
     // Pulling data
     pullSwitch()
@@ -18,7 +23,14 @@ async function bootstrap() {
     Logger.error('Pulling switch error :>> ' + err)
   }
 
-  await app.listen(process.env.APP_PORT)
+  app.enableCors()
+
+  try {
+    await app.listen(process.env.APP_PORT)
+  } catch (err) {
+    Logger.error('Cannot listen on App Port', process.env.APP_PORT)
+  }
   Logger.log('Listening on port ' + process.env.APP_PORT, 'App')
 }
+
 bootstrap()
