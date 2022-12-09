@@ -1,4 +1,4 @@
-import React, { useCallback, useEffect, useMemo } from 'react'
+import React, { useCallback, useEffect, useMemo, useRef, useState } from 'react'
 import { Animated } from 'react-native'
 import styled from 'styled-components/native'
 import { COLORS } from '../styles'
@@ -16,6 +16,7 @@ const SkeletonView = styled.View`
 
 export const Skeleton = (props: SkeletonProps) => {
   const { height = '100%', width = '100%', duration } = props
+  const [movingWidth, setMovingWidth] = useState<number>(1000)
   const circleAnimatedValue = useMemo(() => new Animated.Value(0), [])
 
   const circleAnimated = useCallback(() => {
@@ -36,7 +37,13 @@ export const Skeleton = (props: SkeletonProps) => {
   }, [])
 
   return (
-    <SkeletonView style={{ width, height }}>
+    <SkeletonView
+      onLayout={(event) => {
+        const { width: compWidth } = event.nativeEvent.layout
+        setMovingWidth(1.1 * compWidth)
+      }}
+      style={{ width, height }}
+    >
       <Animated.View
         style={{
           width: '10%',
@@ -47,7 +54,7 @@ export const Skeleton = (props: SkeletonProps) => {
             {
               translateX: circleAnimatedValue.interpolate({
                 inputRange: [0, 1],
-                outputRange: [-10, 1000],
+                outputRange: [-10, movingWidth],
               }),
             },
           ],

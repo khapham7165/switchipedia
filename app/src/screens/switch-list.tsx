@@ -24,7 +24,7 @@ const SwitchItem = styled(Card)``
 
 const CardContainer = styled.View`
   padding: 4px;
-  flex: 1 1 500px;
+  flex: 1 1 400px;
 `
 
 type SwitchListProps = any
