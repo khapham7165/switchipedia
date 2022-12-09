@@ -7,7 +7,7 @@ export class SwitchesController {
   findAll(): any {
     return SwitchModel.find()
       .populate(['manufacturer', 'brand', 'switchType'])
-      .select('-variant')
+      .select('-variant -rawText')
   }
 
   @Get(':id')

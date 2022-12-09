@@ -8,7 +8,6 @@ export const CenteredView = styled.View`
 `
 
 export const BodyView = styled.View`
-  padding: 20px 16px;
   background-color: ${COLORS.WHITE};
   height: 100%;
 `

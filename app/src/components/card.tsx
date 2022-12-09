@@ -5,11 +5,9 @@ import { COLORS } from '../styles'
 import { Text } from './text'
 import { Entypo } from '@expo/vector-icons'
 import { AntDesign } from '@expo/vector-icons'
+import { Skeleton } from './skeleton'
 
-export enum CardType {
-  Horizontal = 'Horizontal',
-  Vertical = 'Vertical',
-}
+type CardType = 'horizontal' | 'vertical'
 
 type CardProps = {
   type?: CardType
@@ -17,6 +15,7 @@ type CardProps = {
   title?: string
   description?: string
   imageSrc?: ImageSourcePropType
+  loading?: boolean
 }
 
 const CARD_BORDER = '8px'
@@ -94,20 +93,27 @@ const IconContainerView = styled.View`
 `
 export const Card = (props: CardProps) => {
   const {
-    type = CardType.Horizontal,
+    type = 'horizontal',
     info,
     title,
     description,
     imageSrc,
+    loading,
   } = props
 
   const renderByType = (type: CardType) => {
     switch (type) {
-      case CardType.Horizontal:
+      case 'horizontal':
         return (
-          <CardView>
+          <CardView
+            style={{
+              borderColor: loading ? COLORS.DISABLED : COLORS.BLACK_BERRY,
+            }}
+          >
             <ImageView>
-              {imageSrc ? (
+              {loading ? (
+                <Skeleton />
+              ) : imageSrc ? (
                 <Image source={imageSrc} />
               ) : (
                 <Entypo name="image" size={32} color={COLORS.WHITE} />
@@ -115,28 +121,38 @@ export const Card = (props: CardProps) => {
             </ImageView>
             <ContentView>
               <Text l4 numberOfLines={1}>
-                {info}
+                {loading ? <Skeleton /> : info}
               </Text>
               <TitleView>
                 <Text h6 numberOfLines={2} ellipsizeMode="tail">
-                  {title}
+                  {loading ? <Skeleton /> : title}
                 </Text>
               </TitleView>
               <Text p2 numberOfLines={2} ellipsizeMode="tail">
-                {description}
+                {loading ? <Skeleton /> : description}
               </Text>
             </ContentView>
             <IconContainerView>
-              <AntDesign name="right" size={12.5} color={COLORS.BLACK_BERRY} />
+              <AntDesign
+                name="right"
+                size={12.5}
+                color={loading ? COLORS.DISABLED : COLORS.BLACK_BERRY}
+              />
             </IconContainerView>
           </CardView>
         )
 
-      case CardType.Vertical:
+      case 'vertical':
         return (
-          <VerticalCardView>
+          <VerticalCardView
+            style={{
+              borderColor: loading ? COLORS.DISABLED : COLORS.BLACK_BERRY,
+            }}
+          >
             <VerticalImageView>
-              {imageSrc ? (
+              {loading ? (
+                <Skeleton />
+              ) : imageSrc ? (
                 <Image source={imageSrc} />
               ) : (
                 <Entypo name="image" size={32} color={COLORS.WHITE} />
@@ -145,14 +161,14 @@ export const Card = (props: CardProps) => {
             <VerticalContentView>
               <VerticalTitleView>
                 <Text h4 numberOfLines={1} ellipsizeMode="tail">
-                  {title}
+                  {loading ? <Skeleton /> : title}
                 </Text>
                 <Text h6 numberOfLines={1}>
-                  {info}
+                  {loading ? <Skeleton /> : info}
                 </Text>
               </VerticalTitleView>
               <Text p1 numberOfLines={2} ellipsizeMode="tail">
-                {description}
+                {loading ? <Skeleton /> : description}
               </Text>
             </VerticalContentView>
           </VerticalCardView>
@@ -161,5 +177,14 @@ export const Card = (props: CardProps) => {
         break
     }
   }
-  return <ShadowView>{renderByType(type)}</ShadowView>
+
+  return (
+    <ShadowView
+      style={{
+        backgroundColor: loading ? COLORS.DISABLED : COLORS.BLACK_BERRY,
+      }}
+    >
+      {renderByType(type)}
+    </ShadowView>
+  )
 }

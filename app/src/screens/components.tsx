@@ -1,4 +1,4 @@
-import { BodyView, Card, CardType, Text, Button } from '../components'
+import { BodyView, Card, Text, Button, Skeleton } from '../components'
 import React from 'react'
 import { ScrollView } from 'react-native'
 
@@ -53,17 +53,19 @@ export const Components = () => {
         </Button>
 
         <Card
-          type={CardType.Horizontal}
+          type={'horizontal'}
           title="Horizontal Card Title"
           description="Horizontal Card Description"
           info="Horizontal Card Info"
         />
         <Card
-          type={CardType.Vertical}
+          type={'vertical'}
           title="Vertical Card Title"
           description="Vertical Card Description"
           info="Vertical Card Info"
         />
+        <Card loading />
+        <Card type={'vertical'} loading />
       </BodyView>
     </ScrollView>
   )
