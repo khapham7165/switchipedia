@@ -18,7 +18,7 @@ export class SwitchService {
     ])
   }
 
-  async getImage(path: string) {
+  getImage(path: string) {
     const imagePath = `./src/switches.mx/public/assets/${path}`
 
     try {
