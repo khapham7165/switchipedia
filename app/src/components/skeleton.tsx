@@ -42,7 +42,7 @@ export const Skeleton = (props: SkeletonProps) => {
     <SkeletonView
       onLayout={(event) => {
         const { width: compWidth } = event.nativeEvent.layout
-        setMovingWidth(compWidth)
+        setMovingWidth(compWidth * 0.9)
       }}
       style={{ height, width }}
     >

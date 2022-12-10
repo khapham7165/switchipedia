@@ -1,9 +1,10 @@
-import React from 'react'
+import React, { useContext } from 'react'
 import {
   Text as NativeText,
   TextProps as NativeTextProps,
   StyleSheet,
 } from 'react-native'
+import { AppContext } from '../contexts'
 
 type TextProps = NativeTextProps & {
   h1?: boolean
@@ -33,6 +34,7 @@ type TextProps = NativeTextProps & {
 }
 
 export const Text = (props: TextProps) => {
+  const { colors } = useContext(AppContext)
   const {
     h1,
     h2,
@@ -55,6 +57,135 @@ export const Text = (props: TextProps) => {
     bold,
     italic,
   } = props
+
+  const styles = StyleSheet.create({
+    h1: {
+      fontFamily: 'SatoshiBlack',
+      fontSize: 28,
+      lineHeight: 35.84,
+      color: colors.header,
+    },
+    h2: {
+      fontFamily: 'SatoshiBold',
+      fontSize: 24,
+      lineHeight: 31.68,
+      color: colors.header,
+    },
+    h3: {
+      fontFamily: 'SatoshiMedium',
+      fontSize: 22,
+      lineHeight: 28.16,
+      letterSpacing: 0.02,
+      color: colors.header,
+    },
+    h4: {
+      fontFamily: 'SatoshiBold',
+      fontSize: 20,
+      lineHeight: 24,
+      letterSpacing: 0.02,
+      color: colors.header,
+    },
+    h5: {
+      fontFamily: 'SatoshiBold',
+      fontSize: 18,
+      lineHeight: 22.32,
+      letterSpacing: 0.02,
+      color: colors.header,
+    },
+    h6: {
+      fontFamily: 'SatoshiMedium',
+      fontSize: 16,
+      lineHeight: 20,
+      letterSpacing: 0.02,
+      color: colors.header,
+    },
+
+    p1: {
+      fontSize: 16,
+      lineHeight: 24,
+      letterSpacing: 0.01,
+    },
+    p2: {
+      fontSize: 14,
+      lineHeight: 21.7,
+      letterSpacing: 0.01,
+    },
+    p3: {
+      fontSize: 12,
+      lineHeight: 18,
+      letterSpacing: 0.02,
+    },
+
+    default: {
+      fontFamily: 'RobotoRegular',
+      fontSize: 16,
+      lineHeight: 24,
+      color: colors.text,
+    },
+
+    bold: {
+      fontFamily: 'RobotoBold',
+    },
+    italic: {
+      fontFamily: 'RobotoItalic',
+    },
+
+    b1: {
+      fontSize: 20,
+      lineHeight: 20,
+      letterSpacing: 0.02,
+      fontFamily: 'SatoshiMedium',
+    },
+    b2: {
+      fontSize: 16,
+      lineHeight: 16,
+      letterSpacing: 0.02,
+      fontFamily: 'SatoshiMedium',
+    },
+    b3: {
+      fontSize: 14,
+      lineHeight: 14,
+      letterSpacing: 0.02,
+      fontFamily: 'SatoshiMedium',
+    },
+    b3Sm: {
+      fontSize: 12,
+      lineHeight: 12,
+      letterSpacing: 0.02,
+      fontFamily: 'SatoshiMedium',
+    },
+
+    l1: {
+      fontSize: 16,
+      lineHeight: 18,
+      letterSpacing: 0.04,
+      fontFamily: 'RobotoMedium',
+    },
+    l2: {
+      fontSize: 16,
+      lineHeight: 18,
+      letterSpacing: 0.04,
+      fontFamily: 'RobotoRegular',
+    },
+    l3: {
+      fontSize: 12,
+      lineHeight: 14,
+      letterSpacing: 0.03,
+      fontFamily: 'RobotoMedium',
+    },
+    l4: {
+      fontSize: 12,
+      lineHeight: 14,
+      letterSpacing: 0.03,
+      fontFamily: 'RobotoRegular',
+    },
+    l5: {
+      fontSize: 12,
+      lineHeight: 12,
+      letterSpacing: 0.02,
+      fontFamily: 'RobotoMedium',
+    },
+  })
 
   return (
     <NativeText
@@ -86,126 +217,3 @@ export const Text = (props: TextProps) => {
     />
   )
 }
-
-const styles = StyleSheet.create({
-  h1: {
-    fontFamily: 'SatoshiBlack',
-    fontSize: 28,
-    lineHeight: 35.84,
-  },
-  h2: {
-    fontFamily: 'SatoshiBold',
-    fontSize: 24,
-    lineHeight: 31.68,
-  },
-  h3: {
-    fontFamily: 'SatoshiMedium',
-    fontSize: 22,
-    lineHeight: 28.16,
-    letterSpacing: 0.02,
-  },
-  h4: {
-    fontFamily: 'SatoshiBold',
-    fontSize: 20,
-    lineHeight: 24,
-    letterSpacing: 0.02,
-  },
-  h5: {
-    fontFamily: 'SatoshiBold',
-    fontSize: 18,
-    lineHeight: 22.32,
-    letterSpacing: 0.02,
-  },
-  h6: {
-    fontFamily: 'SatoshiMedium',
-    fontSize: 16,
-    lineHeight: 20,
-    letterSpacing: 0.02,
-  },
-
-  p1: {
-    fontSize: 16,
-    lineHeight: 24,
-    letterSpacing: 0.01,
-  },
-  p2: {
-    fontSize: 14,
-    lineHeight: 21.7,
-    letterSpacing: 0.01,
-  },
-  p3: {
-    fontSize: 12,
-    lineHeight: 18,
-    letterSpacing: 0.02,
-  },
-
-  default: {
-    fontFamily: 'RobotoRegular',
-    fontSize: 16,
-    lineHeight: 24,
-    color: 'inherit',
-  },
-
-  bold: {
-    fontFamily: 'RobotoBold',
-  },
-  italic: {
-    fontFamily: 'RobotoItalic',
-  },
-
-  b1: {
-    fontSize: 20,
-    lineHeight: 20,
-    letterSpacing: 0.02,
-    fontFamily: 'SatoshiMedium',
-  },
-  b2: {
-    fontSize: 16,
-    lineHeight: 16,
-    letterSpacing: 0.02,
-    fontFamily: 'SatoshiMedium',
-  },
-  b3: {
-    fontSize: 14,
-    lineHeight: 14,
-    letterSpacing: 0.02,
-    fontFamily: 'SatoshiMedium',
-  },
-  b3Sm: {
-    fontSize: 12,
-    lineHeight: 12,
-    letterSpacing: 0.02,
-    fontFamily: 'SatoshiMedium',
-  },
-
-  l1: {
-    fontSize: 16,
-    lineHeight: 18,
-    letterSpacing: 0.04,
-    fontFamily: 'RobotoMedium',
-  },
-  l2: {
-    fontSize: 16,
-    lineHeight: 18,
-    letterSpacing: 0.04,
-    fontFamily: 'RobotoRegular',
-  },
-  l3: {
-    fontSize: 12,
-    lineHeight: 14,
-    letterSpacing: 0.03,
-    fontFamily: 'RobotoMedium',
-  },
-  l4: {
-    fontSize: 12,
-    lineHeight: 14,
-    letterSpacing: 0.03,
-    fontFamily: 'RobotoRegular',
-  },
-  l5: {
-    fontSize: 12,
-    lineHeight: 12,
-    letterSpacing: 0.02,
-    fontFamily: 'RobotoMedium',
-  },
-})

@@ -1,16 +1,15 @@
 import {
   StyleProp,
   StyleSheet,
-  TouchableWithoutFeedback,
   TouchableWithoutFeedbackProps,
   View,
   ViewStyle,
 } from 'react-native'
-import React, { useState } from 'react'
-import { COLORS } from '../styles'
+import React, { useContext, useState } from 'react'
 import { Text } from './text'
 import styled from 'styled-components/native'
 import { useMemo } from 'react'
+import { AppContext } from '../contexts'
 
 type ButtonProps = TouchableWithoutFeedbackProps & {
   btnType?: 'primary' | 'secondary' | 'link'
@@ -27,8 +26,49 @@ const Touchable = styled.TouchableWithoutFeedback`
 
 export const Button = (props: ButtonProps) => {
   const { active, btnType = 'primary', disabled = false } = props
-
+  const { colors } = useContext(AppContext)
   const [isTouch, setIsTouch] = useState(false)
+
+  const defaultButtonTypeStyle: TouchableWithoutFeedbackProps['style'] =
+    useMemo(
+      () => ({
+        padding: 16,
+        alignItems: 'center',
+        justifyContent: 'center',
+        borderWidth: 2,
+        borderRadius: 4,
+      }),
+      []
+    )
+
+  const styles = StyleSheet.create({
+    primary: {
+      ...defaultButtonTypeStyle,
+      backgroundColor: colors.buttonPrimary,
+      color: colors.textPrimaryButton,
+      borderColor: colors.borderButtonPrimary,
+    },
+    secondary: {
+      ...defaultButtonTypeStyle,
+      backgroundColor: colors.button,
+      color: colors.text,
+      borderColor: colors.border,
+    },
+    primaryDisabled: {
+      ...defaultButtonTypeStyle,
+      color: colors.textPrimaryButton,
+      backgroundColor: colors.disabled,
+      borderColor: colors.disabled,
+    },
+    secondaryDisabled: {
+      ...defaultButtonTypeStyle,
+      color: colors.disabled,
+      backgroundColor: colors.button,
+      borderColor: colors.disabled,
+    },
+    link: { backgroundColor: colors.background, color: colors.text },
+    linkDisabled: { color: colors.disabled },
+  })
 
   return (
     <Touchable
@@ -46,10 +86,10 @@ export const Button = (props: ButtonProps) => {
         style={
           btnType !== 'link' && {
             backgroundColor: props.disabled
-              ? COLORS.DISABLED
+              ? colors.disabled
               : isTouch || active
-              ? COLORS.GOJI_BERRY
-              : COLORS.BLACK_BERRY,
+              ? colors.active
+              : colors.shadow,
             padding: active ? 2 : 1,
             borderRadius: 4,
           }
@@ -79,43 +119,6 @@ export const Button = (props: ButtonProps) => {
     </Touchable>
   )
 }
-
-const defaultButtonTypeStyle: TouchableWithoutFeedbackProps['style'] = {
-  padding: 16,
-  alignItems: 'center',
-  justifyContent: 'center',
-  borderWidth: 2,
-  borderRadius: 4,
-}
-
-const styles = StyleSheet.create({
-  primary: {
-    ...defaultButtonTypeStyle,
-    backgroundColor: COLORS.BLACK_BERRY,
-    color: COLORS.WHITE,
-    borderColor: COLORS.BLACK_BERRY,
-  },
-  secondary: {
-    ...defaultButtonTypeStyle,
-    backgroundColor: COLORS.WHITE,
-    color: COLORS.BLACK_BERRY,
-    borderColor: COLORS.BLACK_BERRY,
-  },
-  primaryDisabled: {
-    ...defaultButtonTypeStyle,
-    color: COLORS.WHITE,
-    backgroundColor: COLORS.DISABLED,
-    borderColor: COLORS.DISABLED,
-  },
-  secondaryDisabled: {
-    ...defaultButtonTypeStyle,
-    color: COLORS.DISABLED,
-    backgroundColor: COLORS.WHITE,
-    borderColor: COLORS.DISABLED,
-  },
-  link: { backgroundColor: COLORS.WHITE, color: COLORS.BLACK_BERRY },
-  linkDisabled: { color: COLORS.DISABLED },
-})
 
 export const HugButton = styled(Button)`
   width: 100;

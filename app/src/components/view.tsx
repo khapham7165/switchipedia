@@ -1,5 +1,8 @@
+import React from 'react'
+import { useContext } from 'react'
+import { ViewProps } from 'react-native'
 import styled from 'styled-components/native'
-import { COLORS } from '../styles'
+import { AppContext } from '../contexts'
 
 export const CenteredView = styled.View`
   flex: 1;
@@ -7,7 +10,11 @@ export const CenteredView = styled.View`
   justify-content: center;
 `
 
-export const BodyView = styled.View`
-  background-color: ${COLORS.WHITE};
-  height: 100%;
-`
+export const BodyView = (props: ViewProps) => {
+  const { colors } = useContext(AppContext)
+  const Container = styled.View`
+    background-color: ${colors.body};
+    height: 100%;
+  `
+  return <Container {...props} />
+}

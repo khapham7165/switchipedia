@@ -10,6 +10,10 @@ export const COLORS = {
   SUCCESS: '#27ae60',
   WARNING: '#f7cb45',
   ERROR: '#eb4242',
+  DARK_TEXT: '#E1E1E1',
+  DARK_BODY: '#292930',
+  DARK_BACKGROUND: '#6D6D74',
+  DARK_RED: '#FF002E',
 }
 
 export const s = StyleSheet.create({
