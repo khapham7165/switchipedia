@@ -17,6 +17,8 @@ const ItemsContainer = styled.View`
   width: 100%;
   flex-wrap: wrap;
   flex-direction: row;
+  align-items: center;
+  justify-content: center;
 `
 const SwitchesList = styled.ScrollView``
 
@@ -48,10 +50,13 @@ export const SwitchList = (props: SwitchListProps) => {
             ? [{ _id: 1 }, { _id: 2 }, { _id: 3 }, { _id: 4 }]
             : switches
           )?.map((item: SwitchData) => (
-            <CardContainer key={item._id}>
+            <CardContainer
+              style={{ maxWidth: width > BREAK_POINT.TABLET ? 358 : undefined }}
+              key={item._id}
+            >
               <SwitchItem
                 loading={fetchSwitchLoading}
-                type={width > BREAK_POINT.LAPTOP ? 'vertical' : 'horizontal'}
+                type={width > BREAK_POINT.TABLET ? 'vertical' : 'horizontal'}
                 title={`${item.brand && capitalize(item.brand.name) + ' - '}${
                   item.title
                 }`}

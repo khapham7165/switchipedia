@@ -12,6 +12,8 @@ type SkeletonProps = {
 const SkeletonView = styled.View`
   background-color: ${COLORS.DISABLED};
   border-radius: 4px;
+  flex-direction: 'row';
+  flex: 1;
 `
 
 export const Skeleton = (props: SkeletonProps) => {
@@ -40,9 +42,9 @@ export const Skeleton = (props: SkeletonProps) => {
     <SkeletonView
       onLayout={(event) => {
         const { width: compWidth } = event.nativeEvent.layout
-        setMovingWidth(1.1 * compWidth)
+        setMovingWidth(compWidth)
       }}
-      style={{ width, height }}
+      style={{ height, width }}
     >
       <Animated.View
         style={{
