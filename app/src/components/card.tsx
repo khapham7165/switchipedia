@@ -6,6 +6,7 @@ import { Text } from './text'
 import { Entypo } from '@expo/vector-icons'
 import { AntDesign } from '@expo/vector-icons'
 import { Skeleton } from './skeleton'
+import { Chip } from './chip'
 
 type CardType = 'horizontal' | 'vertical'
 
@@ -16,6 +17,7 @@ type CardProps = {
   description?: string
   imageSrc?: ImageSourcePropType
   loading?: boolean
+  tags?: string[]
 }
 
 const CARD_BORDER = '8px'
@@ -91,6 +93,16 @@ const IconContainerView = styled.View`
   align-items: center;
   justify-content: center;
 `
+
+const TagsContainerView = styled.View`
+  padding: 2px;
+  position: absolute;
+  bottom: 0;
+  right: 0;
+  margin: 2px;
+  flex-direction: row;
+  flex-wrap: wrap;
+`
 export const Card = (props: CardProps) => {
   const {
     type = 'horizontal',
@@ -99,6 +111,7 @@ export const Card = (props: CardProps) => {
     description,
     imageSrc,
     loading,
+    tags = [],
   } = props
 
   const renderByType = (type: CardType) => {
@@ -118,6 +131,13 @@ export const Card = (props: CardProps) => {
               ) : (
                 <Entypo name="image" size={32} color={COLORS.WHITE} />
               )}
+              <TagsContainerView>
+                {loading ? (
+                  <Skeleton />
+                ) : (
+                  tags.map((tag) => <Chip key={tag}>{tag}</Chip>)
+                )}
+              </TagsContainerView>
             </ImageView>
             <ContentView>
               <Text l4 numberOfLines={1}>
@@ -157,6 +177,13 @@ export const Card = (props: CardProps) => {
               ) : (
                 <Entypo name="image" size={32} color={COLORS.WHITE} />
               )}
+              <TagsContainerView>
+                {loading ? (
+                  <Skeleton />
+                ) : (
+                  tags.map((tag) => <Chip key={tag}>{tag}</Chip>)
+                )}
+              </TagsContainerView>
             </VerticalImageView>
             <VerticalContentView>
               <VerticalTitleView>

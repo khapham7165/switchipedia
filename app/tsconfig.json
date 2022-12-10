@@ -7,6 +7,6 @@
       "@types/styled-components-react-native",
       "node"
     ],
-    "baseUrl": "./",
+    "esModuleInterop": true,
   }
 }

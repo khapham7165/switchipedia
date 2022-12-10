@@ -1,11 +1,16 @@
-import { BottomTabHeaderProps } from '@react-navigation/bottom-tabs'
-import React from 'react'
-import { View } from 'react-native'
+import { BottomTabHeaderProps as NativeProps } from '@react-navigation/bottom-tabs'
+import React, { ReactNode } from 'react'
 import { COLORS } from '../../styles'
 import styled from 'styled-components/native'
 import { Text } from '../text'
 import { AntDesign } from '@expo/vector-icons'
 import { Button } from '../button'
+
+type BottomTabHeaderProps = NativeProps & {
+  leftButton?: boolean
+  rightButton?: boolean
+  title?: string | ReactNode
+}
 
 const Row = styled.View`
   padding: 22px 8px;
@@ -37,21 +42,32 @@ const RightItem = styled.View`
 `
 
 export const BottomTabHeader = (props: BottomTabHeaderProps) => {
-  const { route, navigation, options } = props
+  const {
+    route,
+    navigation,
+    options,
+    leftButton = true,
+    rightButton = false,
+    title,
+  } = props
   return (
     <Row>
       <LeftItem>
-        <Button btnType="link" onPress={() => navigation.goBack()}>
-          <AntDesign name="arrowleft" size={17} color="black" /> Back
-        </Button>
+        {leftButton && (
+          <Button btnType="link" onPress={() => navigation.goBack()}>
+            <AntDesign name="arrowleft" size={17} color="black" /> Back
+          </Button>
+        )}
       </LeftItem>
       <CenterItem>
-        <Text h6>{props.route.name}</Text>
+        {title ? title : <Text h6>{props.route.name}</Text>}
       </CenterItem>
       <RightItem>
-        <Button btnType="link" onPress={() => navigation.goBack()}>
-          Cancel
-        </Button>
+        {rightButton && (
+          <Button btnType="link" onPress={() => navigation.goBack()}>
+            Cancel
+          </Button>
+        )}
       </RightItem>
     </Row>
   )

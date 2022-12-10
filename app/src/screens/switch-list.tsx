@@ -12,7 +12,7 @@ const Container = styled(BodyView)`
 `
 
 const ItemsContainer = styled.View`
-  padding: 20px 16px;
+  padding: 8px;
   max-width: 1920px;
   width: 100%;
   flex-wrap: wrap;
@@ -56,6 +56,7 @@ export const SwitchList = (props: SwitchListProps) => {
                   item.title
                 }`}
                 description={item.notes}
+                tags={[capitalize(item.switchType?.name)]}
               />
             </CardContainer>
           ))}
