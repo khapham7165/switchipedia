@@ -34,6 +34,12 @@ const ImageView = styled.View`
   color: white;
 `
 
+const ImageContent = styled.Image`
+  width: 100%;
+  height: 100%;
+  border-radius: 6px;
+`
+
 const ShadowView = styled.View`
   background-color: ${COLORS.BLACK_BERRY};
   border-radius: ${CARD_BORDER};
@@ -127,7 +133,7 @@ export const Card = (props: CardProps) => {
               {loading ? (
                 <Skeleton />
               ) : imageSrc ? (
-                <Image source={imageSrc} />
+                <ImageContent source={imageSrc} />
               ) : (
                 <Entypo name="image" size={32} color={COLORS.WHITE} />
               )}
@@ -173,7 +179,7 @@ export const Card = (props: CardProps) => {
               {loading ? (
                 <Skeleton />
               ) : imageSrc ? (
-                <Image source={imageSrc} />
+                <ImageContent source={imageSrc} />
               ) : (
                 <Entypo name="image" size={32} color={COLORS.WHITE} />
               )}

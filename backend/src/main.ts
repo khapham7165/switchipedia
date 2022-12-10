@@ -6,7 +6,7 @@ import { pullSwitch } from 'src/utils'
 
 async function bootstrap() {
   const app = await NestFactory.create(AppModule)
-
+  app.setGlobalPrefix('api')
   // Connect to DB server
   try {
     await mongoose.connect(

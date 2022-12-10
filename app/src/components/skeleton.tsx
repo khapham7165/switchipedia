@@ -1,4 +1,4 @@
-import React, { useCallback, useEffect, useMemo, useRef, useState } from 'react'
+import React, { useCallback, useEffect, useMemo, useState } from 'react'
 import { Animated } from 'react-native'
 import styled from 'styled-components/native'
 import { COLORS } from '../styles'

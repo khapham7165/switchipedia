@@ -1,5 +1,5 @@
 import React, { useEffect } from 'react'
-import { BodyView, Card } from '../components'
+import { BodyView, Card, Image } from '../components'
 import { useFetch } from '../hooks'
 import { SwitchData } from '../interfaces'
 import { capitalize } from 'lodash'
@@ -49,22 +49,30 @@ export const SwitchList = (props: SwitchListProps) => {
           {(fetchSwitchLoading
             ? [{ _id: 1 }, { _id: 2 }, { _id: 3 }, { _id: 4 }]
             : switches
-          )?.map((item: SwitchData) => (
-            <CardContainer
-              style={{ maxWidth: width > BREAK_POINT.TABLET ? 358 : undefined }}
-              key={item._id}
-            >
-              <SwitchItem
-                loading={fetchSwitchLoading}
-                type={width > BREAK_POINT.TABLET ? 'vertical' : 'horizontal'}
-                title={`${item.brand && capitalize(item.brand.name) + ' - '}${
-                  item.title
-                }`}
-                description={item.notes}
-                tags={[capitalize(item.switchType?.name)]}
-              />
-            </CardContainer>
-          ))}
+          )?.map((item: SwitchData) => {
+            return (
+              <CardContainer
+                style={{
+                  maxWidth: width > BREAK_POINT.TABLET ? 358 : undefined,
+                }}
+                key={item._id}
+              >
+                <SwitchItem
+                  loading={fetchSwitchLoading}
+                  type={width > BREAK_POINT.TABLET ? 'vertical' : 'horizontal'}
+                  title={`${item.brand && capitalize(item.brand.name) + ' - '}${
+                    item.title
+                  }`}
+                  description={item.notes}
+                  tags={[capitalize(item.switchType?.name)]}
+                  imageSrc={
+                    item?.photos?.[0] &&
+                    require(`../../assets/${item.photos?.[0]}`)
+                  }
+                />
+              </CardContainer>
+            )
+          })}
         </ItemsContainer>
       </Container>
     </SwitchesList>

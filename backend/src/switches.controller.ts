@@ -1,21 +1,17 @@
 import { Controller, Get, Param } from '@nestjs/common'
-import { SwitchModel } from 'src/mongo/models'
+import { SwitchService } from './switchies.service'
 
 @Controller('switch')
 export class SwitchesController {
+  constructor(private readonly switchService: SwitchService) {}
+
   @Get('/all')
   findAll(): any {
-    return SwitchModel.find()
-      .populate(['manufacturer', 'brand', 'switchType'])
-      .select('-variant -rawText')
+    return this.switchService.getAll()
   }
 
-  @Get(':id')
-  findOne(@Param() params): any {
-    return SwitchModel.findById(params.id).populate([
-      'manufacturer',
-      'brand',
-      'switchType',
-    ])
+  @Get('/id/:id')
+  findOneById(@Param('id') id: string) {
+    return this.switchService.getById(id)
   }
 }

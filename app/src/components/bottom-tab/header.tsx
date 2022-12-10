@@ -5,6 +5,8 @@ import styled from 'styled-components/native'
 import { Text } from '../text'
 import { AntDesign } from '@expo/vector-icons'
 import { Button } from '../button'
+import { SCREEN } from '../../constants'
+import { Image } from '../image'
 
 type BottomTabHeaderProps = NativeProps & {
   leftButton?: boolean
@@ -13,7 +15,7 @@ type BottomTabHeaderProps = NativeProps & {
 }
 
 const Row = styled.View`
-  padding: 22px 8px;
+  padding: 12px 8px;
   align-items: center;
   flex-direction: row;
   justify-content: space-between;
@@ -47,7 +49,7 @@ export const BottomTabHeader = (props: BottomTabHeaderProps) => {
     navigation,
     options,
     leftButton = true,
-    rightButton = false,
+    rightButton = true,
     title,
   } = props
   return (
@@ -64,8 +66,8 @@ export const BottomTabHeader = (props: BottomTabHeaderProps) => {
       </CenterItem>
       <RightItem>
         {rightButton && (
-          <Button btnType="link" onPress={() => navigation.goBack()}>
-            Cancel
+          <Button btnType="link" onPress={() => navigation.jumpTo(SCREEN.HOME)}>
+            <Image icon source={require('../../../assets/icon.png')} />
           </Button>
         )}
       </RightItem>
