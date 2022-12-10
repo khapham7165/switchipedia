@@ -1,11 +1,8 @@
 import React, { useEffect } from 'react'
-import { BodyView, Card, Image } from '../../components'
+import { BodyView, ScreenTitle, Text } from '../../components'
 import { useFetch } from '../../hooks'
 import { SwitchData } from '../../interfaces'
-import { capitalize } from 'lodash'
 import styled from 'styled-components/native'
-import { useWindowDimensions } from 'react-native'
-import { BREAK_POINT } from '../../constants'
 import { SwitchCard } from './switch-card'
 
 const Container = styled(BodyView)`
@@ -24,6 +21,10 @@ const ItemsContainer = styled.View`
 
 const SwitchesList = styled.ScrollView``
 
+const ScreenTitleView = styled(ScreenTitle)`
+  padding-left: 4px;
+  padding-right: 4px;
+`
 type SwitchListProps = any
 
 export const SwitchList = (props: SwitchListProps) => {
@@ -40,6 +41,7 @@ export const SwitchList = (props: SwitchListProps) => {
     <SwitchesList>
       <Container>
         <ItemsContainer>
+          <ScreenTitleView>Home</ScreenTitleView>
           {(fetchSwitchLoading
             ? [{ _id: 1 }, { _id: 2 }, { _id: 3 }, { _id: 4 }]
             : switches
