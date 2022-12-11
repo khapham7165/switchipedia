@@ -1,9 +1,10 @@
 import { capitalize } from 'lodash'
-import React, { useEffect } from 'react'
+import React, { useContext, useEffect } from 'react'
 import { useWindowDimensions } from 'react-native'
 import styled from 'styled-components/native'
-import { Card } from '../../components'
+import { Card, Text } from '../../components'
 import { BREAK_POINT } from '../../constants'
+import { AppContext } from '../../contexts'
 import { useFetch } from '../../hooks'
 import { SwitchData } from '../../interfaces'
 
@@ -21,6 +22,7 @@ const SwitchItem = styled(Card)``
 export const SwitchCard = (props: SwitchCardProps) => {
   const { item, loading } = props
   const { width } = useWindowDimensions()
+  const { colors } = useContext(AppContext)
 
   const [fetchImage, { data: imageData, loading: imageLoading }] = useFetch(
     `/switch/image?path=${item?.photos?.[0]}`
@@ -28,7 +30,7 @@ export const SwitchCard = (props: SwitchCardProps) => {
 
   useEffect(() => {
     if (item?.photos?.[0]) fetchImage()
-  }, [])
+  }, [fetchImage, item])
 
   return item ? (
     <CardContainer
@@ -38,11 +40,17 @@ export const SwitchCard = (props: SwitchCardProps) => {
       key={item._id}
     >
       <SwitchItem
+        imageLoading={imageLoading}
         loading={loading}
         type={width > BREAK_POINT.TABLET ? 'vertical' : 'horizontal'}
-        title={`${item.brand && capitalize(item.brand.name) + ' - '}${
-          item.title
-        }`}
+        title={
+          <>
+            <Text style={{ color: colors.title }}>
+              {item.brand && capitalize(item.brand.name) + ' '}
+              <Text>{item.title}</Text>
+            </Text>
+          </>
+        }
         description={item.notes}
         tags={[capitalize(item.switchType?.name)]}
         imageSrc={imageData && { uri: imageData }}

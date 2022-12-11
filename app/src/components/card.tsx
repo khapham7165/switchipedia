@@ -1,4 +1,4 @@
-import React, { useContext } from 'react'
+import React, { ReactNode, useContext } from 'react'
 import { ImageSourcePropType } from 'react-native'
 import styled from 'styled-components/native'
 import { Text } from './text'
@@ -13,11 +13,12 @@ type CardType = 'horizontal' | 'vertical'
 type CardProps = {
   type?: CardType
   info?: string
-  title?: string
+  title?: string | ReactNode
   description?: string
   imageSrc?: ImageSourcePropType
   loading?: boolean
   tags?: string[]
+  imageLoading?: boolean
 }
 
 const CARD_BORDER = '8px'
@@ -26,12 +27,13 @@ const SHADOW_WIDTH = '3px'
 
 export const Card = (props: CardProps) => {
   const {
+    imageLoading = false,
     type = 'horizontal',
     info,
     title,
     description,
     imageSrc,
-    loading,
+    loading = false,
     tags = [],
   } = props
 
@@ -133,7 +135,7 @@ export const Card = (props: CardProps) => {
             }}
           >
             <ImageView>
-              {loading ? (
+              {loading || imageLoading ? (
                 <Skeleton />
               ) : imageSrc ? (
                 <ImageContent source={imageSrc} />

@@ -35,7 +35,7 @@ export const SwitchList = (props: SwitchListProps) => {
 
   useEffect(() => {
     fetchSwitches()
-  }, [])
+  }, [fetchSwitches])
 
   return (
     <SwitchesList>

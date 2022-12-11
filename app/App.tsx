@@ -8,7 +8,6 @@ import {
   Image,
   Text,
 } from './src/components'
-import { Components, SwitchList } from './src/screens'
 import { APP_FONTS } from './src/configs'
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs'
 import { SafeAreaView } from 'react-native'
@@ -16,6 +15,7 @@ import styled from 'styled-components/native'
 import { SCREEN, THEME } from './src/constants'
 import { AppTheme } from './src/interfaces'
 import { AppContext } from './src/contexts'
+import { SwitchList, Components, Settings } from './src/screens'
 
 const Tab = createBottomTabNavigator()
 const { Navigator, Screen } = Tab
@@ -68,10 +68,21 @@ export default function App() {
               }}
             />
             <Screen
-              name="Components"
+              name={SCREEN.COMPONENTS}
               component={Components}
               options={{
-                header: (props) => <BottomTabHeader {...props} />,
+                header: (props) => (
+                  <BottomTabHeader {...props} leftButton={false} />
+                ),
+              }}
+            />
+            <Screen
+              name={SCREEN.SETTINGS}
+              component={Settings}
+              options={{
+                header: (props) => (
+                  <BottomTabHeader {...props} leftButton={false} />
+                ),
               }}
             />
           </Navigator>

@@ -1,6 +1,13 @@
-import React, { useCallback, useEffect, useMemo, useState } from 'react'
+import React, {
+  useCallback,
+  useContext,
+  useEffect,
+  useMemo,
+  useState,
+} from 'react'
 import { Animated } from 'react-native'
 import styled from 'styled-components/native'
+import { AppContext } from '../contexts'
 import { COLORS } from '../styles'
 
 type SkeletonProps = {
@@ -20,6 +27,7 @@ export const Skeleton = (props: SkeletonProps) => {
   const { height = '100%', width = '100%', duration } = props
   const [movingWidth, setMovingWidth] = useState<number>(1000)
   const circleAnimatedValue = useMemo(() => new Animated.Value(0), [])
+  const { colors } = useContext(AppContext)
 
   const circleAnimated = useCallback(() => {
     circleAnimatedValue.setValue(0)
@@ -36,13 +44,13 @@ export const Skeleton = (props: SkeletonProps) => {
 
   useEffect(() => {
     circleAnimated()
-  }, [])
+  }, [circleAnimated])
 
   return (
     <SkeletonView
       onLayout={(event) => {
         const { width: compWidth } = event.nativeEvent.layout
-        setMovingWidth(compWidth * 0.9)
+        setMovingWidth(compWidth * 1.1)
       }}
       style={{ height, width }}
     >
@@ -50,7 +58,7 @@ export const Skeleton = (props: SkeletonProps) => {
         style={{
           width: '10%',
           height: '100%',
-          backgroundColor: COLORS.WHITE,
+          backgroundColor: colors.body,
           opacity: 0.5,
           transform: [
             {

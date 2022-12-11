@@ -16,7 +16,7 @@ export const useFetch: (
         setLoading(false)
       })
       .catch((error) => setError(error.message))
-  }, [url])
+  }, [url, setLoading, setData, getHttp])
 
   return [getData, { data, loading, error }]
 }

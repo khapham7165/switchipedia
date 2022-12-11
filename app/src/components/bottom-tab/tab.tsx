@@ -1,9 +1,10 @@
 import React, { useCallback, useContext } from 'react'
 import { BottomTabBarProps } from '@react-navigation/bottom-tabs'
 import styled from 'styled-components/native'
-import { Ionicons } from '@expo/vector-icons'
+import { Ionicons, MaterialCommunityIcons } from '@expo/vector-icons'
 import { Text } from '../text'
 import { AppContext } from '../../contexts'
+import { SCREEN } from '../../constants'
 
 const CARD_BORDER = '8px'
 const MIN_TAB_HEIGHT = '72px'
@@ -50,13 +51,36 @@ export const BottomTab = (props: BottomTabBarProps) => {
 
   const mapNameToIcon = useCallback((name?: string, active?: boolean) => {
     switch (name) {
-      case 'Home':
+      case SCREEN.HOME:
         return active ? (
           <Ionicons name="home" size={ICON_SIZE} color={colors.text} />
         ) : (
           <Ionicons name="home-outline" size={ICON_SIZE} color={colors.text} />
         )
-
+      case SCREEN.SETTINGS:
+        return active ? (
+          <Ionicons name="settings" size={ICON_SIZE} color={colors.text} />
+        ) : (
+          <Ionicons
+            name="settings-outline"
+            size={ICON_SIZE}
+            color={colors.text}
+          />
+        )
+      case SCREEN.COMPONENTS:
+        return active ? (
+          <MaterialCommunityIcons
+            name="view-compact"
+            size={ICON_SIZE}
+            color={colors.text}
+          />
+        ) : (
+          <MaterialCommunityIcons
+            name="view-compact-outline"
+            size={ICON_SIZE}
+            color={colors.text}
+          />
+        )
       default:
         return <Text>{name}</Text>
     }
