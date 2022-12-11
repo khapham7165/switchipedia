@@ -32,4 +32,14 @@ export class SwitchService {
       )
     }
   }
+
+  async getHomeLatestSwitches() {
+    const res = await SwitchModel.find()
+      .sort({ createdAt: -1 })
+      .limit(10)
+      .populate(['manufacturer', 'brand', 'switchType'])
+      .select('title name createdAt photos')
+
+    return res
+  }
 }

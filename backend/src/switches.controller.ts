@@ -21,4 +21,9 @@ export class SwitchesController {
     const mimeType = 'image/png'
     return `data:${mimeType};base64,${image}`
   }
+
+  @Get('/top-home')
+  findTopHome() {
+    return this.switchService.getHomeLatestSwitches()
+  }
 }
