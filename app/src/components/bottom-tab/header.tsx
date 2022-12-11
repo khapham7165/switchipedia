@@ -36,6 +36,7 @@ export const BottomTabHeader = (props: BottomTabHeaderProps) => {
     border-bottom-style: solid;
     border-bottom-color: ${colors.border};
     gap: 32px;
+    height: 58px;
   `
 
   const LeftItem = styled.View`

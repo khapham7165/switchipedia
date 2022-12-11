@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import { useFonts } from 'expo-font'
 import { NavigationContainer } from '@react-navigation/native'
 import {
@@ -33,13 +33,17 @@ const IconView = styled(Image)`
 `
 
 export default function App() {
+  const [theme, setTheme] = useState<AppTheme>(AppTheme.Light)
   const [colors, setColors] = useState(THEME[AppTheme.Dark])
   const [fontsLoaded] = useFonts(APP_FONTS)
 
-  if (!fontsLoaded) return <SplashScreen />
+  useEffect(() => {
+    setColors(THEME[theme])
+  }, [theme, setColors])
 
+  if (!fontsLoaded) return <SplashScreen />
   return (
-    <AppContext.Provider value={{ colors }}>
+    <AppContext.Provider value={{ colors, setTheme, theme }}>
       <SafeAreaView style={{ flex: 1 }}>
         <NavigationContainer>
           <Navigator tabBar={(props) => <BottomTab {...props} />}>
