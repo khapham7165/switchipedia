@@ -11,7 +11,7 @@ import { IColors } from '../interfaces'
 
 type CardType = 'horizontal' | 'vertical'
 
-type CardProps = {
+export type CardProps = {
   type?: CardType
   info?: string
   title?: string | ReactNode
@@ -20,6 +20,7 @@ type CardProps = {
   loading?: boolean
   tags?: string[]
   imageLoading?: boolean
+  sm?: boolean
 }
 
 const CARD_BORDER = '8px'
@@ -77,13 +78,13 @@ const TitleView = styled.View`
   min-height: 40px;
 `
 
-const VerticalCardView = styled(CardView)`
+const VerticalCardView = styled(CardView)<IColors & { sm: boolean }>`
   flex-direction: column;
-  min-width: 100%;
+  min-height: ${({ sm }) => (sm ? '232px' : '358px')};
 `
 
-const VerticalImageView = styled(ImageView)`
-  min-height: 240px;
+const VerticalImageView = styled(ImageView)<{ sm: boolean }>`
+  min-height: ${({ sm }) => (sm ? '120px' : '240px')};
 `
 
 const VerticalContentView = styled(ContentView)`
@@ -122,6 +123,7 @@ export const Card = (props: CardProps) => {
     imageSrc,
     loading = false,
     tags = [],
+    sm = false,
   } = props
 
   const { colors } = useContext(AppContext)
@@ -183,11 +185,12 @@ export const Card = (props: CardProps) => {
         return (
           <VerticalCardView
             colors={colors}
+            sm={sm}
             style={{
               borderColor: loading ? colors.disabled : colors.border,
             }}
           >
-            <VerticalImageView colors={colors}>
+            <VerticalImageView sm={sm} colors={colors}>
               {loading ? (
                 <Skeleton />
               ) : imageSrc ? (
@@ -209,14 +212,21 @@ export const Card = (props: CardProps) => {
             </VerticalImageView>
             <VerticalContentView>
               <VerticalTitleView>
-                <Text h4 numberOfLines={1} ellipsizeMode="tail">
+                <Text
+                  h4={!sm}
+                  h6={sm}
+                  numberOfLines={sm ? 2 : 1}
+                  ellipsizeMode="tail"
+                >
                   {loading ? <Skeleton /> : title}
                 </Text>
-                <Text h6 numberOfLines={1}>
-                  {loading ? <Skeleton /> : info}
-                </Text>
+                {!sm && (
+                  <Text h6 numberOfLines={1}>
+                    {loading ? <Skeleton /> : info}
+                  </Text>
+                )}
               </VerticalTitleView>
-              <Text p1 numberOfLines={2} ellipsizeMode="tail">
+              <Text p1={!sm} p3={sm} numberOfLines={2} ellipsizeMode="tail">
                 {loading ? <Skeleton /> : description}
               </Text>
             </VerticalContentView>

@@ -16,7 +16,7 @@ import styled from 'styled-components/native'
 import { SCREEN, THEME } from './src/constants'
 import { AppTheme } from './src/interfaces'
 import { AppContext } from './src/contexts'
-import { SwitchList, Components, Settings } from './src/screens'
+import { SwitchList, Components, Settings, Home } from './src/screens'
 
 const Tab = createBottomTabNavigator()
 const { Navigator, Screen } = Tab
@@ -51,7 +51,7 @@ export default function App() {
             <Navigator tabBar={(props) => <BottomTab {...props} />}>
               <Screen
                 name={SCREEN.HOME}
-                component={SwitchList}
+                component={Home}
                 options={{
                   header: (props) => (
                     <BottomTabHeader
@@ -70,6 +70,15 @@ export default function App() {
                         </TitleView>
                       }
                     />
+                  ),
+                }}
+              />
+              <Screen
+                name={SCREEN.SWITCH_LIST}
+                component={SwitchList}
+                options={{
+                  header: (props) => (
+                    <BottomTabHeader {...props} leftButton={false} />
                   ),
                 }}
               />

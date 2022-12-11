@@ -79,7 +79,7 @@ export const Text = (props: TextProps) => {
       color: colors.header,
     },
     h4: {
-      fontFamily: 'SatoshiBold',
+      fontFamily: 'SatoshiBlack',
       fontSize: 20,
       lineHeight: 24,
       letterSpacing: 0.02,
