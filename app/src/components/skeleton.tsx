@@ -8,7 +8,7 @@ import React, {
 import { Animated } from 'react-native'
 import styled from 'styled-components/native'
 import { AppContext } from '../contexts'
-import { COLORS } from '../styles'
+import { IColors } from '../interfaces'
 
 type SkeletonProps = {
   height?: number | string
@@ -16,8 +16,8 @@ type SkeletonProps = {
   duration?: number
 }
 
-const SkeletonView = styled.View`
-  background-color: ${COLORS.DISABLED};
+const SkeletonView = styled.View<IColors>`
+  background-color: ${({ colors }) => colors.disabled};
   border-radius: 4px;
   flex-direction: 'row';
   flex: 1;
@@ -48,6 +48,7 @@ export const Skeleton = (props: SkeletonProps) => {
 
   return (
     <SkeletonView
+      colors={colors}
       onLayout={(event) => {
         const { width: compWidth } = event.nativeEvent.layout
         setMovingWidth(compWidth * 1.1)

@@ -41,34 +41,38 @@ export const Button = (props: ButtonProps) => {
       []
     )
 
-  const styles = StyleSheet.create({
-    primary: {
-      ...defaultButtonTypeStyle,
-      backgroundColor: colors.buttonPrimary,
-      color: colors.textPrimaryButton,
-      borderColor: colors.borderButtonPrimary,
-    },
-    secondary: {
-      ...defaultButtonTypeStyle,
-      backgroundColor: colors.button,
-      color: colors.text,
-      borderColor: colors.border,
-    },
-    primaryDisabled: {
-      ...defaultButtonTypeStyle,
-      color: colors.textPrimaryButton,
-      backgroundColor: colors.disabled,
-      borderColor: colors.disabled,
-    },
-    secondaryDisabled: {
-      ...defaultButtonTypeStyle,
-      color: colors.disabled,
-      backgroundColor: colors.button,
-      borderColor: colors.disabled,
-    },
-    link: { backgroundColor: colors.background, color: colors.text },
-    linkDisabled: { color: colors.disabled },
-  })
+  const styles = useMemo(
+    () =>
+      StyleSheet.create({
+        primary: {
+          ...defaultButtonTypeStyle,
+          backgroundColor: colors.buttonPrimary,
+          color: colors.textPrimaryButton,
+          borderColor: colors.borderButtonPrimary,
+        },
+        secondary: {
+          ...defaultButtonTypeStyle,
+          backgroundColor: colors.button,
+          color: colors.text,
+          borderColor: colors.border,
+        },
+        primaryDisabled: {
+          ...defaultButtonTypeStyle,
+          color: colors.textPrimaryButton,
+          backgroundColor: colors.disabled,
+          borderColor: colors.disabled,
+        },
+        secondaryDisabled: {
+          ...defaultButtonTypeStyle,
+          color: colors.disabled,
+          backgroundColor: colors.button,
+          borderColor: colors.disabled,
+        },
+        link: { backgroundColor: colors.background, color: colors.text },
+        linkDisabled: { color: colors.disabled },
+      }),
+    [colors]
+  )
 
   return (
     <Touchable

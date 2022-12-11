@@ -1,7 +1,7 @@
-import { AppTheme } from '../interfaces'
+import { AppTheme, ThemeColors } from '../interfaces'
 import { COLORS } from '../styles'
 
-export const THEME = {
+export const THEME: Record<AppTheme, ThemeColors> = {
   [AppTheme.Light]: {
     text: COLORS.TEXT,
     border: COLORS.BLACK_BERRY,
