@@ -7,6 +7,7 @@ import {
   BottomTabHeader,
   Image,
   Text,
+  BodyView,
 } from './src/components'
 import { APP_FONTS } from './src/configs'
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs'
@@ -44,54 +45,56 @@ export default function App() {
   if (!fontsLoaded) return <SplashScreen />
   return (
     <AppContext.Provider value={{ colors, setTheme, theme }}>
-      <SafeAreaView style={{ flex: 1 }}>
-        <NavigationContainer>
-          <Navigator tabBar={(props) => <BottomTab {...props} />}>
-            <Screen
-              name={SCREEN.HOME}
-              component={SwitchList}
-              options={{
-                header: (props) => (
-                  <BottomTabHeader
-                    {...props}
-                    leftButton={false}
-                    rightButton={false}
-                    title={
-                      <TitleView>
-                        <IconView
-                          style={{ tintColor: colors.header }}
-                          source={require('./assets/icon.png')}
-                        />
-                        <Text numberOfLines={1} h3>
-                          Switchipedia
-                        </Text>
-                      </TitleView>
-                    }
-                  />
-                ),
-              }}
-            />
-            <Screen
-              name={SCREEN.COMPONENTS}
-              component={Components}
-              options={{
-                header: (props) => (
-                  <BottomTabHeader {...props} leftButton={false} />
-                ),
-              }}
-            />
-            <Screen
-              name={SCREEN.SETTINGS}
-              component={Settings}
-              options={{
-                header: (props) => (
-                  <BottomTabHeader {...props} leftButton={false} />
-                ),
-              }}
-            />
-          </Navigator>
-        </NavigationContainer>
-      </SafeAreaView>
+      <BodyView>
+        <SafeAreaView style={{ flex: 1 }}>
+          <NavigationContainer>
+            <Navigator tabBar={(props) => <BottomTab {...props} />}>
+              <Screen
+                name={SCREEN.HOME}
+                component={SwitchList}
+                options={{
+                  header: (props) => (
+                    <BottomTabHeader
+                      {...props}
+                      leftButton={false}
+                      rightButton={false}
+                      title={
+                        <TitleView>
+                          <IconView
+                            style={{ tintColor: colors.header }}
+                            source={require('./assets/icon.png')}
+                          />
+                          <Text numberOfLines={1} h3>
+                            Switchipedia
+                          </Text>
+                        </TitleView>
+                      }
+                    />
+                  ),
+                }}
+              />
+              <Screen
+                name={SCREEN.COMPONENTS}
+                component={Components}
+                options={{
+                  header: (props) => (
+                    <BottomTabHeader {...props} leftButton={false} />
+                  ),
+                }}
+              />
+              <Screen
+                name={SCREEN.SETTINGS}
+                component={Settings}
+                options={{
+                  header: (props) => (
+                    <BottomTabHeader {...props} leftButton={false} />
+                  ),
+                }}
+              />
+            </Navigator>
+          </NavigationContainer>
+        </SafeAreaView>
+      </BodyView>
     </AppContext.Provider>
   )
 }

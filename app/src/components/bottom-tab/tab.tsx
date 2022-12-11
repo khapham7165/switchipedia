@@ -49,42 +49,49 @@ export const BottomTab = (props: BottomTabBarProps) => {
     background-color: ${colors.body};
   `
 
-  const mapNameToIcon = useCallback((name?: string, active?: boolean) => {
-    switch (name) {
-      case SCREEN.HOME:
-        return active ? (
-          <Ionicons name="home" size={ICON_SIZE} color={colors.text} />
-        ) : (
-          <Ionicons name="home-outline" size={ICON_SIZE} color={colors.text} />
-        )
-      case SCREEN.SETTINGS:
-        return active ? (
-          <Ionicons name="settings" size={ICON_SIZE} color={colors.text} />
-        ) : (
-          <Ionicons
-            name="settings-outline"
-            size={ICON_SIZE}
-            color={colors.text}
-          />
-        )
-      case SCREEN.COMPONENTS:
-        return active ? (
-          <MaterialCommunityIcons
-            name="view-compact"
-            size={ICON_SIZE}
-            color={colors.text}
-          />
-        ) : (
-          <MaterialCommunityIcons
-            name="view-compact-outline"
-            size={ICON_SIZE}
-            color={colors.text}
-          />
-        )
-      default:
-        return <Text>{name}</Text>
-    }
-  }, [])
+  const mapNameToIcon = useCallback(
+    (name?: string, active?: boolean) => {
+      switch (name) {
+        case SCREEN.HOME:
+          return active ? (
+            <Ionicons name="home" size={ICON_SIZE} color={colors.text} />
+          ) : (
+            <Ionicons
+              name="home-outline"
+              size={ICON_SIZE}
+              color={colors.text}
+            />
+          )
+        case SCREEN.SETTINGS:
+          return active ? (
+            <Ionicons name="settings" size={ICON_SIZE} color={colors.text} />
+          ) : (
+            <Ionicons
+              name="settings-outline"
+              size={ICON_SIZE}
+              color={colors.text}
+            />
+          )
+        case SCREEN.COMPONENTS:
+          return active ? (
+            <MaterialCommunityIcons
+              name="view-compact"
+              size={ICON_SIZE}
+              color={colors.text}
+            />
+          ) : (
+            <MaterialCommunityIcons
+              name="view-compact-outline"
+              size={ICON_SIZE}
+              color={colors.text}
+            />
+          )
+        default:
+          return <Text>{name}</Text>
+      }
+    },
+    [colors]
+  )
 
   return (
     <Container>

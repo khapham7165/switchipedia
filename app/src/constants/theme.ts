@@ -17,6 +17,7 @@ export const THEME: Record<AppTheme, ThemeColors> = {
     borderButtonPrimary: COLORS.BLACK_BERRY,
     title: COLORS.BLACK_BERRY,
     header: COLORS.BLACK_BERRY,
+    switchActive: COLORS.GOJI_BERRY,
   },
   [AppTheme.Dark]: {
     text: COLORS.DARK_TEXT,
@@ -33,5 +34,6 @@ export const THEME: Record<AppTheme, ThemeColors> = {
     borderButtonPrimary: COLORS.DARK_BACKGROUND,
     title: COLORS.DARK_RED,
     header: COLORS.DARK_TEXT,
+    switchActive: COLORS.DARK_RED,
   },
 }

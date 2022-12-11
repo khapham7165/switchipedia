@@ -17,4 +17,5 @@ export type ThemeColors = {
   borderButtonPrimary: string
   title: string
   header: string
+  switchActive: string
 }

@@ -1,7 +1,6 @@
 import React, { useContext } from 'react'
-import { Switch, View } from 'react-native'
 import { AppContext } from '../../contexts'
-import { BodyView, Text } from '../../components'
+import { BodyView, Text, Switch } from '../../components'
 import styled from 'styled-components/native'
 import { AppTheme, IColors } from '../../interfaces'
 
@@ -37,12 +36,12 @@ export const Settings = (props: SettingsProps) => {
         <Text h2>Dark Mode</Text>
         <SettingsView>
           <SettingItem colors={colors}>
-            <Text b2>Dark Mode</Text>
+            <Text b2>Enable</Text>
             <Switch
-              onValueChange={(value) =>
+              onTouch={(value) =>
                 setTheme(value ? AppTheme.Dark : AppTheme.Light)
               }
-              value={theme === AppTheme.Light ? false : true}
+              defaultValue={theme === AppTheme.Light ? false : true}
             />
           </SettingItem>
         </SettingsView>
