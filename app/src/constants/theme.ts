@@ -15,7 +15,7 @@ export const THEME: Record<AppTheme, ThemeColors> = {
     button: COLORS.WHITE,
     buttonPrimary: COLORS.BLACK_BERRY,
     borderButtonPrimary: COLORS.BLACK_BERRY,
-    title: COLORS.BLACK_BERRY,
+    title: COLORS.GOJI_BERRY,
     header: COLORS.BLACK_BERRY,
     switchActive: COLORS.GOJI_BERRY,
   },

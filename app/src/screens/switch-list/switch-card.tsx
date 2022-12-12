@@ -3,7 +3,6 @@ import React, { useContext, useEffect } from 'react'
 import { useWindowDimensions } from 'react-native'
 import styled from 'styled-components/native'
 import { Card, CardProps, Text } from '../../components'
-import { BREAK_POINT } from '../../constants'
 import { AppContext } from '../../contexts'
 import { useFetch } from '../../hooks'
 import { SwitchData } from '../../interfaces'
@@ -16,7 +15,6 @@ const SwitchItem = styled(Card)``
 
 export const SwitchCard = (props: SwitchCardProps) => {
   const { item, loading } = props
-  const { width } = useWindowDimensions()
   const { colors } = useContext(AppContext)
 
   const [fetchImage, { data: imageData, loading: imageLoading }] = useFetch(

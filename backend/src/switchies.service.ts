@@ -1,5 +1,5 @@
 import { HttpException, HttpStatus, Injectable, Logger } from '@nestjs/common'
-import { SwitchModel } from './mongo/models'
+import { SwitchModel, SwitchTypeModel } from './mongo/models'
 import * as fs from 'fs'
 
 @Injectable()
@@ -33,12 +33,13 @@ export class SwitchService {
     }
   }
 
-  async getHomeLatestSwitches() {
-    const res = await SwitchModel.find()
-      .sort({ createdAt: -1 })
-      .limit(10)
+  async getHomeLatestSwitches(type?: string, amount = 10) {
+    const dbType = type && (await SwitchTypeModel.find({ name: type }))
+    const res = await SwitchModel.find(type && { switchType: dbType })
       .populate(['manufacturer', 'brand', 'switchType'])
-      .select('title name createdAt photos')
+      .sort({ createdAt: -1 })
+      .limit(amount)
+      .select('title name createdAt photos notes')
 
     return res
   }

@@ -3,8 +3,20 @@ import Constants from 'expo-constants'
 
 const BACK_END_URL = Constants?.expoConfig?.extra?.backendUrl
 
-export const getHttp = async (url?: string) => {
-  const { data } = await axios.get(`${BACK_END_URL}${url || '/'}`)
+function encodeQueryData(data?: Record<string, any>) {
+  if (!data) return ''
+
+  const ret = []
+  for (const d in data)
+    data[d] &&
+      ret.push(encodeURIComponent(d) + '=' + encodeURIComponent(data[d]))
+  return '?' + ret.join('&')
+}
+
+export const getHttp = async (url?: string, query?: Record<string, any>) => {
+  const getUrl = `${BACK_END_URL}${(url || '/') + encodeQueryData(query)}`
+  console.log('getUrl :>> ', getUrl)
+  const { data } = await axios.get(getUrl)
 
   return data
 }

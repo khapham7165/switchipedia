@@ -8,12 +8,15 @@ async function bootstrap() {
   const app = await NestFactory.create(AppModule)
   app.setGlobalPrefix('api')
   // Connect to DB server
-  try {
-    await mongoose.connect(
-      `mongodb://${process.env.DB_HOST}:${process.env.DB_PORT}/${process.env.DB_NAME}`,
-    )
-  } catch (error) {
-    Logger.error('Cannot connect to DB', error)
+  let isConnected: any = false
+  while (!!!isConnected) {
+    try {
+      isConnected = await mongoose.connect(
+        `mongodb://${process.env.DB_HOST}:${process.env.DB_PORT}/${process.env.DB_NAME}`,
+      )
+    } catch (error) {
+      Logger.error('Cannot connect to DB', error)
+    }
   }
 
   try {

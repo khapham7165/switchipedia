@@ -1,7 +1,8 @@
 import React from 'react'
-import { ViewProps } from 'react-native'
+import { ScrollView, ViewProps } from 'react-native'
 import styled from 'styled-components/native'
 import { BodyView, Text } from '../../components'
+import { SwitchType } from '../../interfaces'
 import { TopSwitches } from './top-switches'
 
 type HomeProps = ViewProps
@@ -11,10 +12,24 @@ const Container = styled(BodyView)`
 `
 export const Home = (props: HomeProps) => {
   return (
-    <Container {...props}>
-      <Text h1>Hi there!</Text>
-      <Text h2>Latest</Text>
-      <TopSwitches />
-    </Container>
+    <ScrollView>
+      <Container {...props}>
+        <Text h1>Welcome back!</Text>
+        <TopSwitches
+          title={'Latest'}
+          lgCards
+          verticalCards={true}
+          horizontalScroll={true}
+        />
+        <TopSwitches
+          title={'Newest Linear Switches'}
+          type={SwitchType.Linear}
+        />
+        <TopSwitches
+          title={'Newest Tactile Switches'}
+          type={SwitchType.Tactile}
+        />
+      </Container>
+    </ScrollView>
   )
 }

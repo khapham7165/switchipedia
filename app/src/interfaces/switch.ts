@@ -56,6 +56,11 @@ export type SwitchData = {
     name: string
   }
   switchType: {
-    name: string
+    name: SwitchType
   }
+}
+
+export enum SwitchType {
+  Linear = 'linear',
+  Tactile = 'tactile',
 }

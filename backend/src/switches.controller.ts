@@ -23,7 +23,8 @@ export class SwitchesController {
   }
 
   @Get('/top-home')
-  findTopHome() {
-    return this.switchService.getHomeLatestSwitches()
+  findTopHome(@Query() query: { type: string; amount: number }) {
+    const { type, amount } = query
+    return this.switchService.getHomeLatestSwitches(type, amount)
   }
 }

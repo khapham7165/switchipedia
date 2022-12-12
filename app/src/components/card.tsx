@@ -80,7 +80,7 @@ const TitleView = styled.View`
 
 const VerticalCardView = styled(CardView)<IColors & { sm: boolean }>`
   flex-direction: column;
-  min-height: ${({ sm }) => (sm ? '232px' : '358px')};
+  min-height: ${({ sm }) => (sm ? '232px' : '384px')};
 `
 
 const VerticalImageView = styled(ImageView)<{ sm: boolean }>`
@@ -90,7 +90,6 @@ const VerticalImageView = styled(ImageView)<{ sm: boolean }>`
 const VerticalContentView = styled(ContentView)`
   gap: 12px;
   padding: 20px 16px;
-  min-height: 148px;
 `
 
 const VerticalTitleView = styled.View`
@@ -159,7 +158,7 @@ export const Card = (props: CardProps) => {
               </TagsContainerView>
             </ImageView>
             <ContentView>
-              <Text l4 numberOfLines={1}>
+              <Text l4 numberOfLines={1} ellipsizeMode="tail">
                 {loading ? <Skeleton /> : info}
               </Text>
               <TitleView>
@@ -167,9 +166,11 @@ export const Card = (props: CardProps) => {
                   {loading ? <Skeleton /> : title}
                 </Text>
               </TitleView>
-              <Text p2 numberOfLines={2} ellipsizeMode="tail">
-                {loading ? <Skeleton /> : description}
-              </Text>
+              {description && (
+                <Text p2 numberOfLines={2} ellipsizeMode="tail">
+                  {loading ? <Skeleton /> : description}
+                </Text>
+              )}
             </ContentView>
             <IconContainerView>
               <AntDesign
@@ -221,14 +222,16 @@ export const Card = (props: CardProps) => {
                   {loading ? <Skeleton /> : title}
                 </Text>
                 {!sm && (
-                  <Text h6 numberOfLines={1}>
+                  <Text h6 numberOfLines={1} ellipsizeMode="tail">
                     {loading ? <Skeleton /> : info}
                   </Text>
                 )}
               </VerticalTitleView>
-              <Text p1={!sm} p3={sm} numberOfLines={2} ellipsizeMode="tail">
-                {loading ? <Skeleton /> : description}
-              </Text>
+              {description && (
+                <Text p1={!sm} p3={sm} numberOfLines={2} ellipsizeMode="tail">
+                  {loading ? <Skeleton /> : description}
+                </Text>
+              )}
             </VerticalContentView>
           </VerticalCardView>
         )
