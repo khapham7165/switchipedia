@@ -19,7 +19,10 @@ export const useFetch: (
         setData(res)
         setLoading(false)
       })
-      .catch((error) => setError(error.message))
+      .catch((error) => {
+        setLoading(false)
+        setError(error.message)
+      })
   }, [url, setLoading, setData, getHttp])
 
   return [getData, { data, loading, error }]
