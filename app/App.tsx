@@ -4,21 +4,24 @@ import { NavigationContainer } from '@react-navigation/native'
 import {
   SplashScreen,
   BottomTab,
-  BottomTabHeader,
+  Header,
   Image,
   Text,
   BodyView,
 } from '@components'
-import { APP_FONTS } from './src/configs'
+import { APP_FONTS } from '@configs'
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs'
 import { SafeAreaView } from 'react-native'
 import styled from 'styled-components/native'
-import { SCREEN, THEME } from './src/constants'
-import { AppTheme } from './src/interfaces'
-import { AppContext } from './src/contexts'
-import { SwitchList, Components, Settings, Home } from './src/screens'
+import { SCREEN, THEME } from '@constants'
+import { AppTheme } from '@interfaces'
+import { AppContext } from '@contexts'
+import { SwitchList, Components, Settings, Home, SwitchDetail } from '@screens'
+import { createNativeStackNavigator } from '@react-navigation/native-stack'
 
 const Tab = createBottomTabNavigator()
+const Stack = createNativeStackNavigator()
+
 const { Navigator, Screen } = Tab
 
 const TitleView = styled.View`
@@ -42,6 +45,41 @@ export default function App() {
     setColors(THEME[theme])
   }, [theme, setColors])
 
+  const HomeStack = () => (
+    <Stack.Navigator initialRouteName={SCREEN.HOME}>
+      <Stack.Screen
+        name={SCREEN.HOME}
+        component={Home}
+        options={{
+          header: (props) => (
+            <Header
+              {...props}
+              leftButton={false}
+              rightButton={false}
+              title={
+                <TitleView>
+                  <IconView
+                    style={{ tintColor: colors.header }}
+                    source={require('./assets/icon.png')}
+                  />
+                  <Text numberOfLines={1} h3>
+                    Switchipedia
+                  </Text>
+                </TitleView>
+              }
+            />
+          ),
+        }}
+      />
+      <Stack.Screen
+        name={SCREEN.SWITCH_DETAIL}
+        component={SwitchDetail}
+        options={{
+          header: (props) => <Header {...props} title={SCREEN.SWITCH_DETAIL} />,
+        }}
+      />
+    </Stack.Navigator>
+  )
   if (!fontsLoaded) return <SplashScreen />
   return (
     <AppContext.Provider value={{ colors, setTheme, theme }}>
@@ -51,53 +89,28 @@ export default function App() {
             <Navigator tabBar={(props) => <BottomTab {...props} />}>
               <Screen
                 name={SCREEN.HOME}
-                component={Home}
-                options={{
-                  header: (props) => (
-                    <BottomTabHeader
-                      {...props}
-                      leftButton={false}
-                      rightButton={false}
-                      title={
-                        <TitleView>
-                          <IconView
-                            style={{ tintColor: colors.header }}
-                            source={require('./assets/icon.png')}
-                          />
-                          <Text numberOfLines={1} h3>
-                            Switchipedia
-                          </Text>
-                        </TitleView>
-                      }
-                    />
-                  ),
-                }}
+                component={HomeStack}
+                options={{ headerShown: false }}
               />
               <Screen
                 name={SCREEN.SWITCH_LIST}
                 component={SwitchList}
                 options={{
-                  header: (props) => (
-                    <BottomTabHeader {...props} leftButton={false} />
-                  ),
+                  header: (props) => <Header {...props} leftButton={false} />,
                 }}
               />
               <Screen
                 name={SCREEN.COMPONENTS}
                 component={Components}
                 options={{
-                  header: (props) => (
-                    <BottomTabHeader {...props} leftButton={false} />
-                  ),
+                  header: (props) => <Header {...props} leftButton={false} />,
                 }}
               />
               <Screen
                 name={SCREEN.SETTINGS}
                 component={Settings}
                 options={{
-                  header: (props) => (
-                    <BottomTabHeader {...props} leftButton={false} />
-                  ),
+                  header: (props) => <Header {...props} leftButton={false} />,
                 }}
               />
             </Navigator>

@@ -25,7 +25,8 @@ module.exports = function (api) {
             '@interfaces': './src/interfaces',
             '@hooks': './src/hooks',
             '@constants': './src/constants',
-            '@configs': './src/configs'
+            '@configs': './src/configs',
+            '@screens': './src/screens'
           },
         },
       ],

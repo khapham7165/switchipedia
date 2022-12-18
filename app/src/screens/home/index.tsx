@@ -1,5 +1,5 @@
 import React from 'react'
-import { ScrollView, ViewProps } from 'react-native'
+import { ViewProps, ScrollView } from 'react-native'
 import styled from 'styled-components/native'
 import { BodyView, Text } from '@components'
 import { SwitchType } from '@interfaces'
@@ -10,6 +10,7 @@ type HomeProps = ViewProps
 const Container = styled(BodyView)`
   padding: 16px 12px;
 `
+
 export const Home = (props: HomeProps) => {
   return (
     <ScrollView>

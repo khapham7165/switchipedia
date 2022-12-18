@@ -6,7 +6,7 @@ import {
   ViewStyle,
 } from 'react-native'
 import React, { useContext, useState } from 'react'
-import { Text } from './text'
+import { Text } from '@components'
 import styled from 'styled-components/native'
 import { useMemo } from 'react'
 import { AppContext } from '@contexts'

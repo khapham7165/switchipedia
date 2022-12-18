@@ -1,4 +1,4 @@
-import { BottomTabHeaderProps as NativeProps } from '@react-navigation/bottom-tabs'
+import { BottomTabHeaderProps } from '@react-navigation/bottom-tabs'
 import React, { ReactNode, useContext } from 'react'
 import styled from 'styled-components/native'
 import { Text } from '../text'
@@ -7,14 +7,18 @@ import { Button } from '../button'
 import { SCREEN } from '@constants'
 import { Image } from '../image'
 import { AppContext } from '@contexts'
+import { NativeStackHeaderProps } from '@react-navigation/native-stack'
 
-type BottomTabHeaderProps = NativeProps & {
+type BaseProps = {
   leftButton?: boolean
   rightButton?: boolean
   title?: string | ReactNode
 }
+type HeaderProps =
+  | (NativeStackHeaderProps & BaseProps)
+  | (BottomTabHeaderProps & BaseProps)
 
-export const BottomTabHeader = (props: BottomTabHeaderProps) => {
+export const Header = (props: HeaderProps) => {
   const {
     route,
     navigation,
@@ -69,11 +73,14 @@ export const BottomTabHeader = (props: BottomTabHeaderProps) => {
         )}
       </LeftItem>
       <CenterItem>
-        {title ? title : <Text h6>{props.route.name}</Text>}
+        <Text h6>{title || props.route.name}</Text>
       </CenterItem>
       <RightItem>
         {rightButton && (
-          <Button btnType="link" onPress={() => navigation.jumpTo(SCREEN.HOME)}>
+          <Button
+            btnType="link"
+            onPress={() => navigation.navigate(SCREEN.HOME)}
+          >
             <Image
               style={{ tintColor: colors.text }}
               icon

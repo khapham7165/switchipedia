@@ -12,6 +12,7 @@
     "@ant-design/icons": "^4.8.0",
     "@react-navigation/bottom-tabs": "^6.4.3",
     "@react-navigation/native": "^6.0.16",
+    "@react-navigation/native-stack": "^6.9.7",
     "axios": "^1.2.1",
     "dotenv": "^16.0.3",
     "expo": "~47.0.3",

@@ -1,11 +1,12 @@
-import React, { useCallback, useContext, useEffect } from 'react'
+import React, { useCallback, useEffect } from 'react'
 import { useWindowDimensions, ViewProps } from 'react-native'
-import styled from 'styled-components/native'
 import { Text } from '@components'
-import { AppContext } from '@contexts'
 import { useFetch } from '@hooks'
 import { SwitchData, SwitchType } from '@interfaces'
-import { SwitchCard } from '../switch-list/switch-card'
+import { SwitchCard } from '../../switch-list/switch-card'
+import { Container, SwitchCardContainer, ScrollView } from './style'
+import { SCREEN } from '../../../constants/screens'
+import { useNavigation } from '@react-navigation/native'
 
 type TopSwitchesProps = ViewProps & {
   title?: string
@@ -14,24 +15,6 @@ type TopSwitchesProps = ViewProps & {
   horizontalScroll?: boolean
   verticalCards?: boolean
 }
-
-const ScrollView = styled.ScrollView`
-  margin: 0 -12px;
-  padding: 8px;
-`
-
-const Container = styled.View`
-  margin-top: 24px;
-`
-
-const SwitchCardContainer = styled.View<{
-  lgCards?: boolean
-  verticalCards?: boolean
-}>`
-  width: ${({ verticalCards, lgCards }) =>
-    !verticalCards ? '100%' : lgCards ? '356px' : '176px'};
-  padding: 4px;
-`
 
 export const TopSwitches = (props: TopSwitchesProps) => {
   const {
@@ -42,7 +25,7 @@ export const TopSwitches = (props: TopSwitchesProps) => {
     verticalCards = false,
   } = props
   const { width } = useWindowDimensions()
-  const { colors } = useContext(AppContext)
+  const navigation = useNavigation()
 
   const [
     fetchTopSwitches,
@@ -65,7 +48,7 @@ export const TopSwitches = (props: TopSwitchesProps) => {
           verticalCards={verticalCards}
         >
           <SwitchCard
-            onPress={() => console.log('press card :>> ')}
+            onPress={() => navigation.navigate(SCREEN.SWITCH_DETAIL)}
             sm={!lgCards}
             type={verticalCards ? 'vertical' : 'horizontal'}
             item={item}
