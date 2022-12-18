@@ -1,8 +1,8 @@
 import React, { useContext } from 'react'
-import { AppContext } from '../../contexts'
-import { BodyView, Text, Switch } from '../../components'
+import { AppContext } from '@contexts'
+import { BodyView, Text, Switch } from '@components'
 import styled from 'styled-components/native'
-import { AppTheme, IColors } from '../../interfaces'
+import { AppTheme, IColors } from '@interfaces'
 
 type SettingsProps = {
   data?: any

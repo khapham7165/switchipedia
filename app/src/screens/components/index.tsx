@@ -1,4 +1,4 @@
-import { BodyView, Card, Text, Button, Chip } from '../../components'
+import { BodyView, Card, Text, Button, Chip } from '@components'
 import React from 'react'
 import { ScrollView } from 'react-native'
 

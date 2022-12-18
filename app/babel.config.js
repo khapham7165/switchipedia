@@ -14,5 +14,21 @@ module.exports = function (api) {
         },
       ],
     ],
+    plugins: [
+      [
+        'module-resolver',
+        {
+          alias: {
+            '@components': './src/components',
+            '@utils': './src/utils',
+            '@contexts': './src/contexts',
+            '@interfaces': './src/interfaces',
+            '@hooks': './src/hooks',
+            '@constants': './src/constants',
+            '@configs': './src/configs'
+          },
+        },
+      ],
+    ],
   }
 }

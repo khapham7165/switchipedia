@@ -2,8 +2,8 @@ import React from 'react'
 import { useContext } from 'react'
 import { ViewProps } from 'react-native'
 import styled from 'styled-components/native'
-import { AppContext } from '../contexts'
-import { IColors } from '../interfaces'
+import { AppContext } from '@contexts'
+import { IColors } from '@interfaces'
 
 export const CenteredView = styled.View`
   flex: 1;

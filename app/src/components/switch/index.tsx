@@ -1,8 +1,8 @@
 import React, { useCallback, useContext, useMemo, useState } from 'react'
 import { Animated, TouchableWithoutFeedbackProps } from 'react-native'
 import styled from 'styled-components/native'
-import { AppContext } from '../../contexts'
-import { IColors } from '../../interfaces'
+import { AppContext } from '@contexts'
+import { IColors } from '@interfaces'
 
 type SwitchProps = TouchableWithoutFeedbackProps & {
   onTouch?: (value: boolean) => void

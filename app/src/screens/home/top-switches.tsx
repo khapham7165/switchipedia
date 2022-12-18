@@ -1,11 +1,10 @@
 import React, { useCallback, useContext, useEffect } from 'react'
 import { useWindowDimensions, ViewProps } from 'react-native'
 import styled from 'styled-components/native'
-import { Text } from '../../components'
-import { BREAK_POINT } from '../../constants'
-import { AppContext } from '../../contexts'
-import { useFetch } from '../../hooks'
-import { SwitchData, SwitchType } from '../../interfaces'
+import { Text } from '@components'
+import { AppContext } from '@contexts'
+import { useFetch } from '@hooks'
+import { SwitchData, SwitchType } from '@interfaces'
 import { SwitchCard } from '../switch-list/switch-card'
 
 type TopSwitchesProps = ViewProps & {

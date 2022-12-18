@@ -1,4 +1,4 @@
-import { AppTheme, ThemeColors } from '../interfaces'
+import { AppTheme, ThemeColors } from '@interfaces'
 import { COLORS } from '../styles'
 
 export const THEME: Record<AppTheme, ThemeColors> = {

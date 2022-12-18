@@ -8,7 +8,7 @@ import {
   Image,
   Text,
   BodyView,
-} from './src/components'
+} from '@components'
 import { APP_FONTS } from './src/configs'
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs'
 import { SafeAreaView } from 'react-native'

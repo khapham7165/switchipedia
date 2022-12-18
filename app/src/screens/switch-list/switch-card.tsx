@@ -1,11 +1,10 @@
 import { capitalize } from 'lodash'
 import React, { useContext, useEffect } from 'react'
-import { useWindowDimensions } from 'react-native'
 import styled from 'styled-components/native'
-import { Card, CardProps, Text } from '../../components'
-import { AppContext } from '../../contexts'
-import { useFetch } from '../../hooks'
-import { SwitchData } from '../../interfaces'
+import { Card, CardProps, Text } from '@components'
+import { AppContext } from '@contexts'
+import { useFetch } from '@hooks'
+import { SwitchData } from '@interfaces'
 
 type SwitchCardProps = CardProps & {
   item?: SwitchData

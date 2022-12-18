@@ -9,7 +9,7 @@ import React, { useContext, useState } from 'react'
 import { Text } from './text'
 import styled from 'styled-components/native'
 import { useMemo } from 'react'
-import { AppContext } from '../contexts'
+import { AppContext } from '@contexts'
 
 type ButtonProps = TouchableWithoutFeedbackProps & {
   btnType?: 'primary' | 'secondary' | 'link'

@@ -4,9 +4,9 @@ import styled from 'styled-components/native'
 import { Text } from '../text'
 import { AntDesign } from '@expo/vector-icons'
 import { Button } from '../button'
-import { SCREEN } from '../../constants'
+import { SCREEN } from '@constants'
 import { Image } from '../image'
-import { AppContext } from '../../contexts'
+import { AppContext } from '@contexts'
 
 type BottomTabHeaderProps = NativeProps & {
   leftButton?: boolean

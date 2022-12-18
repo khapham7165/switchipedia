@@ -1,8 +1,8 @@
 import React from 'react'
 import { ScrollView, ViewProps } from 'react-native'
 import styled from 'styled-components/native'
-import { BodyView, Text } from '../../components'
-import { SwitchType } from '../../interfaces'
+import { BodyView, Text } from '@components'
+import { SwitchType } from '@interfaces'
 import { TopSwitches } from './top-switches'
 
 type HomeProps = ViewProps

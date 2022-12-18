@@ -1,5 +1,5 @@
 import { useCallback, useState } from 'react'
-import { getHttp } from '../utils'
+import { getHttp } from '@utils'
 
 export const useFetch: (
   url: string,

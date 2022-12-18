@@ -4,7 +4,7 @@ import {
   TextProps as NativeTextProps,
   StyleSheet,
 } from 'react-native'
-import { AppContext } from '../contexts'
+import { AppContext } from '@contexts'
 
 type TextProps = NativeTextProps & {
   h1?: boolean

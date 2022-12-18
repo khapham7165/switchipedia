@@ -1,11 +1,10 @@
 import React, { useEffect } from 'react'
-import { BodyView, ScreenTitle, Text } from '../../components'
-import { useFetch } from '../../hooks'
-import { SwitchData } from '../../interfaces'
+import { BodyView, ScreenTitle } from '@components'
+import { useFetch } from '@hooks'
+import { SwitchData } from '@interfaces'
 import styled from 'styled-components/native'
 import { SwitchCard } from './switch-card'
-import { BREAK_POINT, SCREEN } from '../../constants'
-import { useWindowDimensions } from 'react-native'
+import { SCREEN } from '@constants'
 
 const Container = styled(BodyView)`
   align-items: center;

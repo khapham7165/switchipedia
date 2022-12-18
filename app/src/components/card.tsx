@@ -9,8 +9,8 @@ import { Entypo } from '@expo/vector-icons'
 import { AntDesign } from '@expo/vector-icons'
 import { Skeleton } from './skeleton'
 import { Chip } from './chip'
-import { AppContext } from '../contexts'
-import { IColors } from '../interfaces'
+import { AppContext } from '@contexts'
+import { IColors } from '@interfaces'
 
 type CardType = 'horizontal' | 'vertical'
 

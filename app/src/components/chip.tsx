@@ -1,8 +1,7 @@
 import React, { ReactNode, useContext } from 'react'
 import styled from 'styled-components/native'
-import { AppContext } from '../contexts'
-import { IColors } from '../interfaces'
-import { COLORS } from '../styles'
+import { AppContext } from '@contexts'
+import { IColors } from '@interfaces'
 import { Button } from './button'
 import { Text } from './text'
 
