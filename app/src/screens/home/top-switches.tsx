@@ -66,6 +66,7 @@ export const TopSwitches = (props: TopSwitchesProps) => {
           verticalCards={verticalCards}
         >
           <SwitchCard
+            onPress={() => console.log('press card :>> ')}
             sm={!lgCards}
             type={verticalCards ? 'vertical' : 'horizontal'}
             item={item}

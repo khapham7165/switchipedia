@@ -1,5 +1,8 @@
-import React, { ReactNode, useContext } from 'react'
-import { ImageSourcePropType } from 'react-native'
+import React, { ReactNode, useContext, useState } from 'react'
+import {
+  ImageSourcePropType,
+  TouchableWithoutFeedbackProps,
+} from 'react-native'
 import styled from 'styled-components/native'
 import { Text } from './text'
 import { Entypo } from '@expo/vector-icons'
@@ -11,7 +14,7 @@ import { IColors } from '../interfaces'
 
 type CardType = 'horizontal' | 'vertical'
 
-export type CardProps = {
+export type CardProps = TouchableWithoutFeedbackProps & {
   type?: CardType
   info?: string
   title?: string | ReactNode
@@ -26,6 +29,10 @@ export type CardProps = {
 const CARD_BORDER = '8px'
 const MIN_CARD_HEIGHT = '146px'
 const SHADOW_WIDTH = '3px'
+
+const View = styled.View``
+
+const Touchable = styled.TouchableWithoutFeedback``
 
 const ImageView = styled.View<IColors>`
   border-radius: 6px;
@@ -52,13 +59,13 @@ const ShadowView = styled.View<IColors>`
   min-width: 122px;
 `
 
-const CardView = styled.View<IColors>`
+const CardView = styled.View<IColors & { isTouched: boolean }>`
   min-width: 120px;
   border-width: 2px;
-  margin-right: ${SHADOW_WIDTH};
-  margin-bottom: ${SHADOW_WIDTH};
-  margin-top: -${SHADOW_WIDTH};
-  margin-left: -${SHADOW_WIDTH};
+  margin-right: ${({ isTouched }) => (isTouched ? '0' : SHADOW_WIDTH)};
+  margin-bottom: ${({ isTouched }) => (isTouched ? '0' : SHADOW_WIDTH)};
+  margin-top: ${({ isTouched }) => (isTouched ? '0' : '-' + SHADOW_WIDTH)};
+  margin-left: ${({ isTouched }) => (isTouched ? '0' : '-' + SHADOW_WIDTH)};
   border-color: ${({ colors }) => colors.border};
   border-radius: ${CARD_BORDER};
   background-color: ${({ colors }) => colors.background};
@@ -126,12 +133,14 @@ export const Card = (props: CardProps) => {
   } = props
 
   const { colors } = useContext(AppContext)
+  const [isTouched, setIsTouched] = useState<boolean>(false)
 
   const renderByType = (type: CardType) => {
     switch (type) {
       case 'horizontal':
         return (
           <CardView
+            isTouched={isTouched}
             colors={colors}
             style={{
               borderColor: loading ? colors.disabled : colors.border,
@@ -185,6 +194,7 @@ export const Card = (props: CardProps) => {
       case 'vertical':
         return (
           <VerticalCardView
+            isTouched={isTouched}
             colors={colors}
             sm={sm}
             style={{
@@ -241,13 +251,20 @@ export const Card = (props: CardProps) => {
   }
 
   return (
-    <ShadowView
-      colors={colors}
-      style={{
-        backgroundColor: loading ? colors.disabled : colors.shadow,
-      }}
-    >
-      {renderByType(type)}
-    </ShadowView>
+    <Touchable {...props}>
+      <ShadowView
+        colors={colors}
+        style={{
+          backgroundColor: loading ? colors.disabled : colors.shadow,
+        }}
+      >
+        <View
+          onTouchStart={() => setIsTouched(true)}
+          onTouchEnd={() => setIsTouched(false)}
+        >
+          {renderByType(type)}
+        </View>
+      </ShadowView>
+    </Touchable>
   )
 }

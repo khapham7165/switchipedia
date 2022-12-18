@@ -15,7 +15,6 @@ function encodeQueryData(data?: Record<string, any>) {
 
 export const getHttp = async (url?: string, query?: Record<string, any>) => {
   const getUrl = `${BACK_END_URL}${(url || '/') + encodeQueryData(query)}`
-  console.log('getUrl :>> ', getUrl)
   const { data } = await axios.get(getUrl)
 
   return data
