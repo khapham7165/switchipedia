@@ -47,6 +47,7 @@ export const CardView = styled.View<IColors & { isTouched: boolean }>`
   min-height: ${MIN_CARD_HEIGHT};
   padding: 2px;
   flex-direction: row;
+  transition: all 0.1s;
 `
 
 export const ContentView = styled.View`

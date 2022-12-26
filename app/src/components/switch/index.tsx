@@ -1,45 +1,42 @@
-import React, { useCallback, useContext, useMemo, useState } from 'react'
+import React, {
+  useCallback,
+  useContext,
+  useEffect,
+  useMemo,
+  useState,
+} from 'react'
 import { Animated, TouchableWithoutFeedbackProps } from 'react-native'
-import styled from 'styled-components/native'
 import { AppContext } from '@contexts'
-import { IColors } from '@interfaces'
+import { Touchable, Container } from './style'
 
 type SwitchProps = TouchableWithoutFeedbackProps & {
   onTouch?: (value: boolean) => void
   defaultValue?: boolean
 }
 
-const Touchable = styled.TouchableWithoutFeedback``
-
-const Container = styled.View<IColors & { enabled: boolean }>`
-  width: 44px;
-  height: 28px;
-  padding: 4px;
-  border: 2px solid ${({ colors }) => colors.border};
-  border-radius: 40px;
-  transition: all 0.3s;
-`
-
 export const Switch = (props: SwitchProps) => {
   const { colors } = useContext(AppContext)
-  const { onTouch, defaultValue } = props
-  const [enabled, setEnabled] = useState<boolean>(defaultValue || false)
+  const { onTouch, defaultValue = false } = props
+  const [enabled, setEnabled] = useState<boolean>(defaultValue)
   const circleAnimatedValue = useMemo(() => new Animated.Value(0), [])
 
   const circleAnimated = useCallback(() => {
-    circleAnimatedValue.setValue(enabled ? 1 : 0)
+    circleAnimatedValue.setValue(!enabled ? 1 : 0)
     Animated.timing(circleAnimatedValue, {
-      toValue: enabled ? 0 : 1,
+      toValue: !enabled ? 0 : 1,
       duration: 200,
       useNativeDriver: true,
     }).start()
+  }, [enabled])
+
+  useEffect(() => {
+    circleAnimated()
   }, [enabled])
 
   return (
     <Touchable
       {...props}
       onPress={useCallback(() => {
-        circleAnimated()
         setEnabled((prev) => {
           onTouch && onTouch(!prev)
           return !prev

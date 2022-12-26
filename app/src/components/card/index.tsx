@@ -1,4 +1,4 @@
-import React, { ReactNode, useContext, useState } from 'react'
+import React, { ReactNode, useCallback, useContext, useState } from 'react'
 import {
   ImageSourcePropType,
   TouchableWithoutFeedbackProps,
@@ -22,6 +22,7 @@ import {
   VerticalTitleView,
   ShadowView,
 } from './style'
+import { debounce } from 'lodash'
 
 type CardType = 'horizontal' | 'vertical'
 

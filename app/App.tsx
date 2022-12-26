@@ -13,11 +13,12 @@ import { APP_FONTS } from '@configs'
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs'
 import { SafeAreaView } from 'react-native'
 import styled from 'styled-components/native'
-import { SCREEN, THEME } from '@constants'
+import { SCREEN, STORE, THEME } from '@constants'
 import { AppTheme } from '@interfaces'
 import { AppContext } from '@contexts'
 import { SwitchList, Components, Settings, Home, SwitchDetail } from '@screens'
 import { createNativeStackNavigator } from '@react-navigation/native-stack'
+import { getData } from './src/utils/storage'
 
 const Tab = createBottomTabNavigator()
 const Stack = createNativeStackNavigator()
@@ -37,13 +38,19 @@ const IconView = styled(Image)`
 `
 
 export default function App() {
-  const [theme, setTheme] = useState<AppTheme>(AppTheme.Light)
+  const [theme, setTheme] = useState<AppTheme>()
   const [colors, setColors] = useState(THEME[AppTheme.Dark])
   const [fontsLoaded] = useFonts(APP_FONTS)
 
   useEffect(() => {
-    setColors(THEME[theme])
+    theme && setColors(THEME[theme])
   }, [theme, setColors])
+
+  useEffect(() => {
+    getData(STORE.THEME).then((value) =>
+      setTheme((value as AppTheme) || AppTheme.Light)
+    )
+  }, [])
 
   const HomeStack = () => (
     <Stack.Navigator initialRouteName={SCREEN.HOME}>
@@ -80,7 +87,7 @@ export default function App() {
       />
     </Stack.Navigator>
   )
-  if (!fontsLoaded) return <SplashScreen />
+  if (!fontsLoaded || !theme) return <SplashScreen />
   return (
     <AppContext.Provider value={{ colors, setTheme, theme }}>
       <BodyView>
