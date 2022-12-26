@@ -54,12 +54,10 @@ const onRead = async (fileName: string, content: string) => {
     manufacturer: checkedManufacturer,
     brand: checkedBrand,
     switchType: checkedSwitchType,
-    specs: {
-      ...specs[0],
-      forceGraph: isEmpty(specs[0].forceGraph)
-        ? undefined
-        : specs[0].forceGraph,
-    },
+    specs: specs?.map((spec, index) => ({
+      ...spec,
+      forceGraph: isEmpty(spec.forceGraph) ? undefined : spec.forceGraph,
+    })),
     thereminGoatScores:
       variant.thereminGoatScores?.[0] || variant.thereminGoatScores,
     rawText,
@@ -117,7 +115,7 @@ export const pullSwitch = (timer?: number) => {
   }
 
   // Start pulling after call
-  // pullChain()
+  pullChain()
   // Update switches into DB every 'timer' || day
   setInterval(pullChain, timer || 1000 * 60 * 60 * 24)
 }
