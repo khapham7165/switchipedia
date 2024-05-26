@@ -1,4 +1,4 @@
-import axios, { AxiosError } from 'axios'
+import axios from 'axios'
 import Constants from 'expo-constants'
 
 const BACK_END_URL = Constants?.expoConfig?.extra?.backendUrl
@@ -14,7 +14,7 @@ function encodeQueryData(data?: Record<string, any>) {
 }
 
 export const getHttp = async (url?: string, query?: Record<string, any>) => {
-  const getUrl = `${BACK_END_URL}${(url || '/') + encodeQueryData(query)}`
+  const getUrl = `${BACK_END_URL}${(url ?? '/') + encodeQueryData(query)}`
   const { data } = await axios.get(getUrl)
 
   return data

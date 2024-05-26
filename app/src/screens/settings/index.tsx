@@ -1,4 +1,4 @@
-import React, { useContext, useEffect, useState } from 'react'
+import React, { useContext, useEffect, useMemo, useState } from 'react'
 import { AppContext } from '@contexts'
 import { BodyView, Text, Switch } from '@components'
 import { AppTheme } from '@interfaces'
@@ -25,14 +25,19 @@ export const Settings = (props: SettingsProps) => {
         <SettingsView>
           <SettingItem colors={colors}>
             <Text b2>Enable</Text>
-            <Switch
-              onTouch={(value) => {
-                const themeChange = value ? AppTheme.Dark : AppTheme.Light
-                setTheme(themeChange)
-                storeData(STORE.THEME, themeChange)
-              }}
-              defaultValue={theme === themeSet ? false : true}
-            />
+            {useMemo(
+              () => (
+                <Switch
+                  onTouch={(value) => {
+                    const themeChange = value ? AppTheme.Dark : AppTheme.Light
+                    setTheme(themeChange)
+                    storeData(STORE.THEME, themeChange)
+                  }}
+                  defaultValue={theme === themeSet ? false : true}
+                />
+              ),
+              [themeSet]
+            )}
           </SettingItem>
         </SettingsView>
       </Container>

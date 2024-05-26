@@ -17,7 +17,7 @@ type SwitchProps = TouchableWithoutFeedbackProps & {
 export const Switch = (props: SwitchProps) => {
   const { colors } = useContext(AppContext)
   const { onTouch, defaultValue = false } = props
-  const [enabled, setEnabled] = useState<boolean>(defaultValue)
+  const [enabled, setEnabled] = useState<boolean>(false)
   const circleAnimatedValue = useMemo(() => new Animated.Value(0), [])
 
   const circleAnimated = useCallback(() => {
@@ -32,6 +32,10 @@ export const Switch = (props: SwitchProps) => {
   useEffect(() => {
     circleAnimated()
   }, [enabled])
+
+  useEffect(() => {
+    setEnabled(defaultValue)
+  }, [defaultValue])
 
   return (
     <Touchable

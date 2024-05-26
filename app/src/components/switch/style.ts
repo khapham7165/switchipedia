@@ -1,7 +1,9 @@
 import { IColors } from '@interfaces'
 import styled from 'styled-components/native'
 
-export const Touchable = styled.TouchableWithoutFeedback``
+export const Touchable = styled.TouchableWithoutFeedback`
+  cursor: pointer;
+`
 
 export const Container = styled.View<IColors & { enabled: boolean }>`
   width: 44px;
