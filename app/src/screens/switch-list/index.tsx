@@ -48,7 +48,7 @@ type SwitchListProps = any
 export const SwitchList = (props: SwitchListProps) => {
   const [currentPage, setCurrentPage] = useState(1)
   const [pageSize] = useState(10)
-  
+
   const [
     fetchSwitches,
     { data: response, loading: fetchSwitchLoading, error: fetchSwitchError },
@@ -61,9 +61,7 @@ export const SwitchList = (props: SwitchListProps) => {
 
   // Fetch when page changes
   useEffect(() => {
-    if (currentPage > 1) {
-      fetchSwitches({ page: currentPage, limit: pageSize })
-    }
+    fetchSwitches({ page: currentPage, limit: pageSize })
   }, [currentPage, pageSize])
 
   const handlePageChange = (page: number) => {
@@ -82,11 +80,11 @@ export const SwitchList = (props: SwitchListProps) => {
           {(fetchSwitchLoading
             ? [{ _id: 1 }, { _id: 2 }, { _id: 3 }, { _id: 4 }]
             : switches
-          )?.map((item: SwitchData) => {
+          )?.map((item) => {
             return (
               <CardContainer key={item._id}>
                 <SwitchCard
-                  item={item}
+                  item={item as SwitchData}
                   loading={fetchSwitchLoading}
                   onPress={() =>
                     props.navigation.navigate(SCREEN.SWITCH_DETAIL, {
@@ -97,7 +95,7 @@ export const SwitchList = (props: SwitchListProps) => {
               </CardContainer>
             )
           })}
-          
+
           {!fetchSwitchLoading && totalPages > 1 && (
             <Pagination
               currentPage={currentPage}
