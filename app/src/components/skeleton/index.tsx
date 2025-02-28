@@ -5,7 +5,7 @@ import React, {
   useMemo,
   useState,
 } from 'react'
-import { Animated } from 'react-native'
+import { Animated, StyleProp, ViewStyle } from 'react-native'
 import { AppContext } from '@contexts'
 import { SkeletonView } from './style'
 
@@ -13,10 +13,11 @@ type SkeletonProps = {
   height?: number | string
   width?: number | string
   duration?: number
+  style?: StyleProp<ViewStyle>
 }
 
 export const Skeleton = (props: SkeletonProps) => {
-  const { height = '100%', width = '100%', duration } = props
+  const { height = '100%', width = '100%', duration, style } = props
   const [movingWidth, setMovingWidth] = useState<number>(1000)
   const circleAnimatedValue = useMemo(() => new Animated.Value(0), [])
   const { colors } = useContext(AppContext)
@@ -45,8 +46,7 @@ export const Skeleton = (props: SkeletonProps) => {
         const { width: compWidth } = event.nativeEvent.layout
         setMovingWidth(compWidth * 1.1)
       }}
-      style={{ height, width }}
-    >
+      style={[{ height, width }, style]}>
       <Animated.View
         style={{
           width: '10%',

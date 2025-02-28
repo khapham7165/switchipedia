@@ -53,7 +53,15 @@ export const SwitchList = (props: SwitchListProps) => {
           )?.map((item: SwitchData) => {
             return (
               <CardContainer key={item._id}>
-                <SwitchCard item={item} loading={fetchSwitchLoading} />
+                <SwitchCard
+                  item={item}
+                  loading={fetchSwitchLoading}
+                  onPress={() =>
+                    props.navigation.navigate(SCREEN.SWITCH_DETAIL, {
+                      id: item._id,
+                    })
+                  }
+                />
               </CardContainer>
             )
           })}

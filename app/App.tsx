@@ -1,6 +1,7 @@
-import React, { useEffect, useState } from 'react'
+import React, { useEffect, useState, useCallback } from 'react'
 import { useFonts } from 'expo-font'
 import { NavigationContainer } from '@react-navigation/native'
+import * as SplashScreenExpo from 'expo-splash-screen'
 import {
   SplashScreen,
   BottomTab,
@@ -19,6 +20,9 @@ import { AppContext } from '@contexts'
 import { SwitchList, Components, Settings, Home, SwitchDetail } from '@screens'
 import { createNativeStackNavigator } from '@react-navigation/native-stack'
 import { getData } from './src/utils/storage'
+
+// Keep the splash screen visible while we fetch resources
+SplashScreenExpo.preventAutoHideAsync()
 
 const Tab = createBottomTabNavigator()
 const Stack = createNativeStackNavigator()
@@ -48,7 +52,7 @@ export default function App() {
 
   useEffect(() => {
     getData(STORE.THEME).then((value) =>
-      setTheme((value as AppTheme) || AppTheme.Light)
+      setTheme((value as AppTheme) || AppTheme.Light),
     )
   }, [])
 
@@ -87,10 +91,19 @@ export default function App() {
       />
     </Stack.Navigator>
   )
+
+  const onLayoutRootView = useCallback(async () => {
+    if (fontsLoaded && theme) {
+      // This tells the splash screen to hide immediately
+      await SplashScreenExpo.hideAsync()
+    }
+  }, [fontsLoaded, theme])
+
   if (!fontsLoaded || !theme) return <SplashScreen />
+
   return (
     <AppContext.Provider value={{ colors, setTheme, theme }}>
-      <BodyView>
+      <BodyView onLayout={onLayoutRootView}>
         <SafeAreaView style={{ flex: 1 }}>
           <NavigationContainer>
             <Navigator tabBar={(props) => <BottomTab {...props} />}>

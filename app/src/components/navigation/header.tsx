@@ -67,8 +67,7 @@ export const Header = (props: HeaderProps) => {
       <LeftItem>
         {leftButton && (
           <Button btnType="link" onPress={() => navigation.goBack()}>
-            <AntDesign name="arrowleft" size={17} color={colors.text} />
-            Back
+            <AntDesign name="arrowleft" size={17} color={colors.text} /> Back
           </Button>
         )}
       </LeftItem>

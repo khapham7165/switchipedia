@@ -1,7 +1,7 @@
 import axios from 'axios'
 import Constants from 'expo-constants'
 
-const BACK_END_URL = Constants?.expoConfig?.extra?.backendUrl
+export const BACK_END_URL = Constants?.expoConfig?.extra?.backendUrl
 
 function encodeQueryData(data?: Record<string, any>) {
   if (!data) return ''
