@@ -3,18 +3,21 @@ import { getHttp } from '@utils'
 
 export const useFetch: (
   url: string,
-  query?: Record<string, any>
-) => [() => void, { data: any; loading?: boolean; error?: string }] = (
+  initialQuery?: Record<string, any>
+) => [(newQuery?: Record<string, any>) => void, { data: any; loading?: boolean; error?: string }] = (
   url,
-  query
+  initialQuery
 ) => {
   const [data, setData] = useState<any>()
   const [loading, setLoading] = useState<boolean>(false)
   const [error, setError] = useState<string>()
 
-  const getData = useCallback(() => {
+  const getData = useCallback((newQuery?: Record<string, any>) => {
     setLoading(true)
-    getHttp(url, query)
+    // Use newQuery if provided, otherwise fall back to initialQuery
+    const queryToUse = newQuery !== undefined ? newQuery : initialQuery
+    
+    getHttp(url, queryToUse)
       .then((res) => {
         setData(res)
         setLoading(false)
@@ -23,7 +26,7 @@ export const useFetch: (
         setLoading(false)
         setError(error.message)
       })
-  }, [url, setLoading, setData, getHttp])
+  }, [url, initialQuery])
 
   return [getData, { data, loading, error }]
 }

@@ -46,7 +46,8 @@ export const Skeleton = (props: SkeletonProps) => {
         const { width: compWidth } = event.nativeEvent.layout
         setMovingWidth(compWidth * 1.1)
       }}
-      style={[{ height, width }, style]}>
+      style={[{ height, width }, style || {}]}
+    >
       <Animated.View
         style={{
           width: '10%',

@@ -1,5 +1,5 @@
-import React, { useEffect } from 'react'
-import { BodyView, ScreenTitle } from '@components'
+import React, { useEffect, useState } from 'react'
+import { BodyView, Pagination, ScreenTitle } from '@components'
 import { useFetch } from '@hooks'
 import { SwitchData } from '@interfaces'
 import styled from 'styled-components/native'
@@ -30,17 +30,49 @@ const ScreenTitleView = styled(ScreenTitle)`
   padding-left: 4px;
   padding-right: 4px;
 `
+
+type PaginatedResponse = {
+  items: SwitchData[]
+  meta: {
+    totalCount: number
+    page: number
+    limit: number
+    totalPages: number
+    hasNextPage: boolean
+    hasPrevPage: boolean
+  }
+}
+
 type SwitchListProps = any
 
 export const SwitchList = (props: SwitchListProps) => {
+  const [currentPage, setCurrentPage] = useState(1)
+  const [pageSize] = useState(10)
+  
   const [
     fetchSwitches,
-    { data: switches, loading: fetchSwitchLoading, error: fetchSwitchError },
-  ] = useFetch('/switch/all')
+    { data: response, loading: fetchSwitchLoading, error: fetchSwitchError },
+  ] = useFetch('/switch/all', { page: 1, limit: pageSize })
 
+  // Initial fetch
   useEffect(() => {
     fetchSwitches()
-  }, [fetchSwitches])
+  }, [])
+
+  // Fetch when page changes
+  useEffect(() => {
+    if (currentPage > 1) {
+      fetchSwitches({ page: currentPage, limit: pageSize })
+    }
+  }, [currentPage, pageSize])
+
+  const handlePageChange = (page: number) => {
+    setCurrentPage(page)
+  }
+
+  const paginatedResponse = response as PaginatedResponse | undefined
+  const switches = paginatedResponse?.items || []
+  const totalPages = paginatedResponse?.meta?.totalPages || 1
 
   return (
     <SwitchesList>
@@ -65,6 +97,14 @@ export const SwitchList = (props: SwitchListProps) => {
               </CardContainer>
             )
           })}
+          
+          {!fetchSwitchLoading && totalPages > 1 && (
+            <Pagination
+              currentPage={currentPage}
+              totalPages={totalPages}
+              onPageChange={handlePageChange}
+            />
+          )}
         </ItemsContainer>
       </Container>
     </SwitchesList>

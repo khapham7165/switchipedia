@@ -140,7 +140,7 @@ type SwitchDetailProps = {
 
 const ImageRender = ({ path }: { path: string }) => {
   const [fetchImage, { data: imageData, loading: imageLoading }] = useFetch(
-    `/switch/image?path=${path}`,
+    `/switch/image?path=${path}`
   )
   useEffect(() => {
     fetchImage()
@@ -155,7 +155,7 @@ export const SwitchDetail = ({ route, navigation }: SwitchDetailProps) => {
   const [isFavorite, setIsFavorite] = useState(false)
 
   const [fetchSwitchDetails, { data: switchDetails, loading }] = useFetch(
-    `/switch/id/${switchId}`,
+    `/switch/id/${switchId}`
   )
 
   useEffect(() => {
@@ -318,7 +318,7 @@ export const SwitchDetail = ({ route, navigation }: SwitchDetailProps) => {
         <ScoreCard colors={colors}>
           {scoreItems.map((item, index) => (
             <ScoreItem key={index}>
-              <Text style={{ whiteSpace: 'nowrap' }} b2>
+              <Text style={{ flexShrink: 0 }} b2>
                 {item.title}
               </Text>
               <View style={{ flexDirection: 'row', alignItems: 'center' }}>
@@ -331,8 +331,9 @@ export const SwitchDetail = ({ route, navigation }: SwitchDetailProps) => {
                     marginLeft: 8,
                     width: 40,
                     textAlign: 'right',
-                    whiteSpace: 'nowrap',
-                  }}>
+                    flexShrink: 0,
+                  }}
+                >
                   {item.score}
                 </Text>
               </View>
@@ -377,7 +378,8 @@ export const SwitchDetail = ({ route, navigation }: SwitchDetailProps) => {
             <ActionButton
               colors={colors}
               primary
-              onPress={() => setIsFavorite(!isFavorite)}>
+              onPress={() => setIsFavorite(!isFavorite)}
+            >
               <AntDesign
                 name={isFavorite ? 'heart' : 'hearto'}
                 size={20}
@@ -446,7 +448,8 @@ export const SwitchDetail = ({ route, navigation }: SwitchDetailProps) => {
               borderRadius: 8,
               borderWidth: 2,
               borderColor: colors.border,
-            }}>
+            }}
+          >
             <Text p1>
               {switchDetails?.notes || 'No description available.'}
             </Text>
@@ -473,7 +476,8 @@ export const SwitchDetail = ({ route, navigation }: SwitchDetailProps) => {
               borderRadius: 8,
               borderWidth: 2,
               borderColor: colors.border,
-            }}>
+            }}
+          >
             <Text h5>
               {capitalize(switchDetails?.manufacturer?.name) || 'Unknown'}
             </Text>

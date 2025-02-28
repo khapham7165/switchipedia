@@ -15,19 +15,16 @@ module.exports = {
     ecmaVersion: 'latest',
     sourceType: 'module',
   },
-  plugins: ['react', 'react-native', '@typescript-eslint', 'prettier'],
+  plugins: ['react', 'react-native', '@typescript-eslint'],
+  settings: {
+    react: {
+      version: 'detect'
+    }
+  },
   rules: {
-    'prettier/prettier': [
-      'error',
-      {
-        singleQuote: true,
-        printWidth: 80,
-        semi: false,
-        endOfLine: 'auto',
-        parser: 'typescript',
-      },
-    ],
     quotes: ['error', 'single'],
     semi: ['error', 'never'],
+    '@typescript-eslint/no-explicit-any': 'warn',
+    '@typescript-eslint/no-unused-vars': 'warn',
   },
 }

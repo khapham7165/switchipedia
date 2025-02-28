@@ -4,10 +4,32 @@ import * as fs from 'fs'
 
 @Injectable()
 export class SwitchService {
-  getAll(): any {
-    return SwitchModel.find()
-      .populate(['manufacturer', 'brand', 'switchType'])
-      .select('-variant -rawText')
+  async getAll(page = 1, limit = 10): Promise<any> {
+    const skip = (page - 1) * limit
+
+    const [items, totalCount] = await Promise.all([
+      SwitchModel.find()
+        .populate(['manufacturer', 'brand', 'switchType'])
+        .select('-variant -rawText')
+        .sort({ createdAt: -1 })
+        .skip(skip)
+        .limit(limit),
+      SwitchModel.countDocuments(),
+    ])
+
+    const totalPages = Math.ceil(totalCount / limit)
+
+    return {
+      items,
+      meta: {
+        totalCount,
+        page,
+        limit,
+        totalPages,
+        hasNextPage: page < totalPages,
+        hasPrevPage: page > 1,
+      },
+    }
   }
 
   getById(id: string): any {

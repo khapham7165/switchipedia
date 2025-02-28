@@ -52,7 +52,7 @@ export default function App() {
 
   useEffect(() => {
     getData(STORE.THEME).then((value) =>
-      setTheme((value as AppTheme) || AppTheme.Light),
+      setTheme((value as AppTheme) || AppTheme.Light)
     )
   }, [])
 

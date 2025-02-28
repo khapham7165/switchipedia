@@ -45,11 +45,12 @@ export const TopSwitches = (props: TopSwitchesProps) => {
         <SwitchCardContainer
           key={item._id}
           lgCards={lgCards}
-          verticalCards={verticalCards}>
+          verticalCards={verticalCards}
+        >
           <SwitchCard
             key={item._id}
             onPress={() =>
-              navigation.navigate(SCREEN.SWITCH_DETAIL, { id: item._id })
+              navigation.navigate(SCREEN.SWITCH_DETAIL as never, { id: item._id } as never)
             }
             sm={!lgCards}
             type={verticalCards ? 'vertical' : 'horizontal'}
@@ -58,7 +59,7 @@ export const TopSwitches = (props: TopSwitchesProps) => {
           />
         </SwitchCardContainer>
       )),
-    [topSwitchesData, topSwitchesLoading, width],
+    [topSwitchesData, topSwitchesLoading, width]
   )
 
   return (

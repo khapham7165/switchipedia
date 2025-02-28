@@ -16,7 +16,7 @@ const IconView = styled.View`
   justify-content: center;
 `
 
-const IconImage = styled(NativeImage)`
+const IconImage = styled.Image`
   width: 20px;
   height: 20px;
 `

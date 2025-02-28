@@ -20,7 +20,7 @@ export const SwitchCard = (props: SwitchCardProps) => {
   const navigation = useNavigation()
 
   const [fetchImage, { data: imageData, loading: imageLoading }] = useFetch(
-    `/switch/image?path=${item?.photos?.[0]}`,
+    `/switch/image?path=${item?.photos?.[0]}`
   )
 
   useEffect(() => {
@@ -43,7 +43,7 @@ export const SwitchCard = (props: SwitchCardProps) => {
       tags={[capitalize(item.switchType?.name)]}
       imageSrc={imageData && { uri: imageData }}
       onPress={() =>
-        navigation.navigate(SCREEN.SWITCH_DETAIL, { id: item._id })
+        navigation.navigate(SCREEN.SWITCH_DETAIL as never, { id: item._id } as never)
       }
       {...props}
     />

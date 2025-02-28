@@ -6,8 +6,10 @@ export class SwitchesController {
   constructor(private readonly switchService: SwitchService) {}
 
   @Get('/all')
-  findAll(): any {
-    return this.switchService.getAll()
+  findAll(@Query() query: { page?: number; limit?: number }): any {
+    const page = query.page ? parseInt(query.page as unknown as string) : 1
+    const limit = query.limit ? parseInt(query.limit as unknown as string) : 10
+    return this.switchService.getAll(page, limit)
   }
 
   @Get('/id/:id')
