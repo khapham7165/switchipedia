@@ -11,9 +11,13 @@ export const SwitchCardContainer = styled.View<{
   width: ${({ verticalCards, lgCards }) =>
     !verticalCards ? '100%' : lgCards ? '356px' : '176px'};
   padding: 4px;
+  scroll-snap-align: start;
 `
 
 export const ScrollView = styled.ScrollView`
   margin: 0 -12px;
   padding: 8px;
+  scroll-snap-type: x mandatory;
+  scroll-behavior: smooth;
+  -webkit-overflow-scrolling: touch;
 `

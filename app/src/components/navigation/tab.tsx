@@ -5,12 +5,11 @@ import { Ionicons, MaterialCommunityIcons } from '@expo/vector-icons'
 import { Text } from '../text'
 import { AppContext } from '@contexts'
 import { SCREEN } from '@constants'
+import { CARD_BORDER, SHADOW_WIDTH } from '../card/style'
 
-const CARD_BORDER = '8px'
 const MIN_TAB_HEIGHT = '72px'
-const SHADOW_WIDTH = '6px'
-const SHADOW_HEIGHT = '8px'
-const ICON_SIZE = 20
+const SHADOW_HEIGHT = SHADOW_WIDTH
+const ICON_SIZE = 24
 
 export const BottomTab = (props: BottomTabBarProps) => {
   const { state, descriptors, navigation } = props
@@ -76,13 +75,13 @@ export const BottomTab = (props: BottomTabBarProps) => {
           return active ? (
             <MaterialCommunityIcons
               name="view-list"
-              size={24}
+              size={32}
               color={colors.text}
             />
           ) : (
             <MaterialCommunityIcons
               name="view-list-outline"
-              size={24}
+              size={32}
               color={colors.text}
             />
           )

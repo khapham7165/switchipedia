@@ -1,16 +1,16 @@
 import styled from 'styled-components/native'
 import { IColors } from '@interfaces'
 
-export const CARD_BORDER = '8px'
+export const CARD_BORDER = 12
 export const MIN_CARD_HEIGHT = '146px'
-export const SHADOW_WIDTH = '3px'
+export const SHADOW_WIDTH = 3
 
 export const View = styled.View``
 
 export const Touchable = styled.TouchableWithoutFeedback``
 
 export const ImageView = styled.View<IColors>`
-  border-radius: 6px;
+  border-radius: ${CARD_BORDER * 0.8}px;
   background-color: ${({ colors }) => colors.text};
   flex: 0.2;
   min-width: 112px;
@@ -22,12 +22,12 @@ export const ImageView = styled.View<IColors>`
 export const ImageContent = styled.Image`
   width: 100%;
   flex: 1;
-  border-radius: 6px;
+  border-radius: ${CARD_BORDER * 0.8}px;
 `
 
 export const ShadowView = styled.View<IColors>`
   background-color: ${({ colors }) => colors.background};
-  border-radius: ${CARD_BORDER};
+  border-radius: ${CARD_BORDER}px;
   margin-left: ${SHADOW_WIDTH};
   margin-top: ${SHADOW_WIDTH};
   min-height: ${MIN_CARD_HEIGHT};
@@ -42,7 +42,7 @@ export const CardView = styled.View<IColors & { isTouched: boolean }>`
   margin-top: ${({ isTouched }) => (isTouched ? '0' : '-' + SHADOW_WIDTH)};
   margin-left: ${({ isTouched }) => (isTouched ? '0' : '-' + SHADOW_WIDTH)};
   border-color: ${({ colors }) => colors.border};
-  border-radius: ${CARD_BORDER};
+  border-radius: ${CARD_BORDER}px;
   background-color: ${({ colors }) => colors.background};
   min-height: ${MIN_CARD_HEIGHT};
   padding: 2px;

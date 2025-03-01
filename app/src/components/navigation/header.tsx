@@ -44,7 +44,7 @@ export const Header = (props: HeaderProps) => {
   `
 
   const LeftItem = styled.View`
-    flex: 1;
+    flex: 0.5;
     align-items: flex-start;
     justify-content: center;
     background-color: ${colors.background};
@@ -56,7 +56,7 @@ export const Header = (props: HeaderProps) => {
     justify-content: center;
   `
   const RightItem = styled.View`
-    flex: 1;
+    flex: 0.5;
     align-items: flex-end;
     justify-content: center;
     background-color: ${colors.background};
@@ -67,12 +67,12 @@ export const Header = (props: HeaderProps) => {
       <LeftItem>
         {leftButton && (
           <Button btnType="link" onPress={() => navigation.goBack()}>
-            <AntDesign name="arrowleft" size={17} color={colors.text} /> Back
+            <AntDesign name="arrowleft" size={20} color={colors.text} />
           </Button>
         )}
       </LeftItem>
       <CenterItem>
-        <Text h6>{title || props.route.name}</Text>
+        <Text h3>{title || props.route.name}</Text>
       </CenterItem>
       <RightItem>
         {rightButton && (
