@@ -10,7 +10,7 @@ const CARD_BORDER = '8px'
 const MIN_TAB_HEIGHT = '72px'
 const SHADOW_WIDTH = '6px'
 const SHADOW_HEIGHT = '8px'
-const ICON_SIZE = 16
+const ICON_SIZE = 20
 
 export const BottomTab = (props: BottomTabBarProps) => {
   const { state, descriptors, navigation } = props
@@ -72,16 +72,31 @@ export const BottomTab = (props: BottomTabBarProps) => {
               color={colors.text}
             />
           )
+        case SCREEN.SWITCH_LIST: {
+          return active ? (
+            <MaterialCommunityIcons
+              name="view-list"
+              size={24}
+              color={colors.text}
+            />
+          ) : (
+            <MaterialCommunityIcons
+              name="view-list-outline"
+              size={24}
+              color={colors.text}
+            />
+          )
+        }
         case SCREEN.COMPONENTS:
           return active ? (
             <MaterialCommunityIcons
-              name="view-compact"
+              name="view-dashboard"
               size={ICON_SIZE}
               color={colors.text}
             />
           ) : (
             <MaterialCommunityIcons
-              name="view-compact-outline"
+              name="view-dashboard-outline"
               size={ICON_SIZE}
               color={colors.text}
             />

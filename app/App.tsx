@@ -70,7 +70,6 @@ export default function App() {
               title={
                 <TitleView>
                   <IconView
-                    style={{ tintColor: colors.header }}
                     source={require('./assets/icon.png')}
                   />
                   <Text numberOfLines={1} h3>

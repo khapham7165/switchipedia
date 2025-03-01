@@ -358,7 +358,7 @@ export const SwitchDetail = ({ route, navigation }: SwitchDetailProps) => {
               <Chip>{capitalize(switchDetails.switchType.name)}</Chip>
             )}
             {switchDetails?.mount && (
-              <Chip>{capitalize(switchDetails.mount)} pins</Chip>
+              <Chip>Pin: {capitalize(switchDetails.mount)}</Chip>
             )}
             {switchDetails?.factoryLubed === 'yes' && (
               <Chip>Factory Lubed</Chip>

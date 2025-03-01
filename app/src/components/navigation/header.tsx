@@ -81,7 +81,6 @@ export const Header = (props: HeaderProps) => {
             onPress={() => navigation.navigate(SCREEN.HOME)}
           >
             <Image
-              style={{ tintColor: colors.text }}
               icon
               source={require('../../../assets/icon.png')}
             />
