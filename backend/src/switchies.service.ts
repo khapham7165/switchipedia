@@ -1,6 +1,5 @@
-import { HttpException, HttpStatus, Injectable, Logger } from '@nestjs/common'
+import { Injectable } from '@nestjs/common'
 import { SwitchModel, SwitchTypeModel } from './mongo/models'
-import * as fs from 'fs'
 
 @Injectable()
 export class SwitchService {
@@ -38,21 +37,6 @@ export class SwitchService {
       'brand',
       'switchType',
     ])
-  }
-
-  getImage(path: string) {
-    const imagePath = `./src/switches.mx/public/assets/${path}`
-
-    try {
-      const data = fs.readFileSync(imagePath)
-      return Buffer.from(data).toString('base64')
-    } catch (error) {
-      Logger.error('No such image in ' + imagePath, 'Switch')
-      throw new HttpException(
-        'No such image in ' + imagePath,
-        HttpStatus.NOT_FOUND,
-      )
-    }
   }
 
   async getHomeLatestSwitches(type?: string, amount = 10) {

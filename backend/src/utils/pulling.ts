@@ -1,5 +1,5 @@
-import { convertSwitchMdToJson, readFiles } from './misc'
-
+import { Octokit } from '@octokit/rest'
+import { convertSwitchMdToJson } from './misc'
 import { Logger } from '@nestjs/common'
 import {
   BrandModel,
@@ -7,9 +7,47 @@ import {
   SwitchModel,
   SwitchTypeModel,
 } from '../mongo/models'
-import { exec } from 'node:child_process'
 import { Model } from 'mongoose'
 import { isEmpty } from 'lodash'
+
+// Initialize GitHub API client
+const octokit = new Octokit({
+  auth: process.env.GITHUB_TOKEN,
+})
+
+const REPO_OWNER = 'BWLR'
+const REPO_NAME = 'switches.mx'
+const SWITCHES_PATH = 'content/collections/switches'
+
+interface CommitInfo {
+  lastSha: string
+  lastPullTime: number
+}
+
+// Store last commit info in DB or file
+let lastCommitInfo: CommitInfo = {
+  lastSha: '',
+  lastPullTime: 0,
+}
+
+async function getLatestCommitSha(): Promise<string> {
+  const { data } = await octokit.repos.getBranch({
+    owner: REPO_OWNER,
+    repo: REPO_NAME,
+    branch: 'main',
+  })
+
+  return data.commit.sha
+}
+
+async function fetchSwitchContent(path: string) {
+  const { data } = await octokit.repos.getContent({
+    owner: REPO_OWNER,
+    repo: REPO_NAME,
+    path: `${SWITCHES_PATH}/${path}`,
+  })
+  return Buffer.from((data as any).content, 'base64').toString()
+}
 
 const checkExisted = async (model: Model<any>, item: Record<string, any>) => {
   let existedManufacture = await model.findOne(item)
@@ -23,99 +61,82 @@ const checkExisted = async (model: Model<any>, item: Record<string, any>) => {
   return existedManufacture
 }
 
-const onRead = async (fileName: string, content: string) => {
-  Logger.log('Converting ' + fileName)
-  const rawText = content
-  const variant = convertSwitchMdToJson(rawText)
-
+const processSwitch = async (fileName: string, content: string) => {
+  const variant = convertSwitchMdToJson(content)
   if (!variant) return
 
   const { manufacturer, brand, specs, switchType, title } = variant
 
-  // manufacture
-
-  const checkedManufacturer = await checkExisted(ManufacturerModel, {
-    name: manufacturer,
-  })
-
-  // brand
-
-  const checkedBrand = await checkExisted(BrandModel, {
-    name: brand,
-  })
-
-  // switchType
-  const checkedSwitchType = await checkExisted(SwitchTypeModel, {
-    name: switchType,
-  })
+  const [checkedManufacturer, checkedBrand, checkedSwitchType] =
+    await Promise.all([
+      checkExisted(ManufacturerModel, { name: manufacturer }),
+      checkExisted(BrandModel, { name: brand }),
+      checkExisted(SwitchTypeModel, { name: switchType }),
+    ])
 
   const switchSet = {
     ...variant,
     manufacturer: checkedManufacturer,
     brand: checkedBrand,
     switchType: checkedSwitchType,
-    specs: specs?.map((spec, index) => ({
+    specs: specs?.map((spec) => ({
       ...spec,
       forceGraph: isEmpty(spec.forceGraph) ? undefined : spec.forceGraph,
     })),
     thereminGoatScores:
       variant.thereminGoatScores?.[0] || variant.thereminGoatScores,
-    rawText,
+    rawText: content,
     variant,
   }
 
-  const existedSwitch = await SwitchModel.findOne({ title })
+  await SwitchModel.findOneAndUpdate(
+    { title },
+    { $set: switchSet },
+    { upsert: true, new: true },
+  )
 
-  if (existedSwitch) {
-    await SwitchModel.updateOne(
-      { _id: existedSwitch._id },
-      {
-        $set: switchSet,
-      },
-    )
-    existedSwitch.rawText = rawText
-    existedSwitch
-      .save()
-      .then(() => Logger.log('Updated - ' + existedSwitch.variant.title))
-  } else {
-    if (!variant.title) {
-      Logger.log(variant.title + ' has no ID')
-
-      return
-    }
-
-    const newSwitch = new SwitchModel(switchSet)
-
-    newSwitch
-      .save()
-      .then(() => Logger.log('Saved new switch - ' + newSwitch?.variant?.title))
-  }
+  Logger.log(`Processed switch: ${title}`)
 }
 
-export const pullSwitch = (timer?: number) => {
-  // Service started from here ----------------------------------------------
-  const pullChain = () => {
-    const currentDir = process.cwd() + '/src'
-    Logger.log('Pulling switches.mx...')
-    exec('cd ' + currentDir + ' && cd switches.mx && git pull', (exception) => {
-      if (exception) {
-        Logger.log(exception)
-        Logger.log('Pulling Repo...')
-        exec(
-          'cd ' +
-            currentDir +
-            ' && git clone https://github.com/BWLR/switches.mx.git',
-          (exception) => !exception && pullChain(),
-        )
-      } else {
-        Logger.log('Pulling Done')
-        readFiles('./src/switches.mx/content/collections/switches/', onRead)
+export const pullSwitch = async (timer?: number) => {
+  const pullChanges = async () => {
+    try {
+      const latestSha = await getLatestCommitSha()
+
+      if (latestSha === lastCommitInfo.lastSha) {
+        Logger.log('No new changes detected')
+        return
       }
-    })
+
+      const { data: files } = await octokit.repos.getContent({
+        owner: REPO_OWNER,
+        repo: REPO_NAME,
+        path: SWITCHES_PATH,
+      })
+
+      await Promise.all(
+        (files as any[]).map(async (file) => {
+          const content = await fetchSwitchContent(file.name)
+          await processSwitch(file.name, content)
+        }),
+      )
+
+      lastCommitInfo = {
+        lastSha: latestSha,
+        lastPullTime: Date.now(),
+      }
+
+      Logger.log('Successfully pulled and processed all switches')
+    } catch (error) {
+      Logger.error('Error pulling switches:', error)
+    }
   }
 
-  // Start pulling after call
-  pullChain()
-  // Update switches into DB every 'timer' || day
-  setInterval(pullChain, timer || 1000 * 60 * 60 * 24)
+  // Initial pull
+  await pullChanges()
+
+  // Set up interval if timer provided
+  if (timer) {
+    setInterval(pullChanges, timer)
+  }
 }

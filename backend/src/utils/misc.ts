@@ -1,5 +1,4 @@
 import { Logger } from '@nestjs/common'
-import * as fs from 'fs'
 
 export const convertSwitchMdToJson = (string: string) => {
   const result = string
@@ -55,16 +54,4 @@ export const convertSwitchMdToJson = (string: string) => {
   }
 
   return null
-}
-
-export const readFiles = async (
-  dirname: string,
-  onFileContent: (fileName: string, content: string) => Promise<void>,
-) => {
-  const fileNames = fs.readdirSync(dirname)
-
-  for (const fileName of fileNames) {
-    const content = fs.readFileSync(dirname + fileName, { encoding: 'utf-8' })
-    await onFileContent(fileName, content)
-  }
 }

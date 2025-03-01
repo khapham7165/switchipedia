@@ -17,13 +17,6 @@ export class SwitchesController {
     return this.switchService.getById(id)
   }
 
-  @Get('/image')
-  findImageByPath(@Query() query: { path: string }) {
-    const image = this.switchService.getImage(query.path)
-    const mimeType = 'image/png'
-    return `data:${mimeType};base64,${image}`
-  }
-
   @Get('/top-home')
   findTopHome(@Query() query: { type: string; amount: number }) {
     const { type, amount } = query

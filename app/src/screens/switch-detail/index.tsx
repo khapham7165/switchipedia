@@ -11,6 +11,7 @@ import {
   Ionicons,
 } from '@expo/vector-icons'
 import styled from 'styled-components/native'
+import { SWITCH_IMAGE_URL } from '@utils'
 
 const Container = styled(BodyView)`
   padding: 16px 12px;
@@ -138,16 +139,6 @@ type SwitchDetailProps = {
   navigation: any
 }
 
-const ImageRender = ({ path }: { path: string }) => {
-  const [fetchImage, { data: imageData, loading: imageLoading }] = useFetch(
-    `/switch/image?path=${path}`
-  )
-  useEffect(() => {
-    fetchImage()
-  }, [])
-
-  return <ImageContent source={{ uri: imageData }} />
-}
 export const SwitchDetail = ({ route, navigation }: SwitchDetailProps) => {
   const { colors } = useContext(AppContext)
   const switchId = route?.params?.id || ''
@@ -277,7 +268,7 @@ export const SwitchDetail = ({ route, navigation }: SwitchDetailProps) => {
       <ImageGallery horizontal showsHorizontalScrollIndicator={false}>
         {switchDetails.photos.map((photo: string, index: number) => (
           <ImageContainer key={index} colors={colors}>
-            <ImageRender path={photo} />
+            <ImageContent source={{ uri: SWITCH_IMAGE_URL + '/' + photo }} />
           </ImageContainer>
         ))}
       </ImageGallery>

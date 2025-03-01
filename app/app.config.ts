@@ -8,6 +8,7 @@ const config: ExpoConfig = {
   slug: 'switchipedia',
   extra: {
     backendUrl: process.env.BACK_END_URL,
+    switchImageUrl: process.env.SWITCH_IMAGE_URL
   },
   // Necessary for SDK 52
   sdkVersion: '52.0.0',
