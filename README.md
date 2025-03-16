@@ -1,5 +1,9 @@
 # Switchipedia
 
+<div align="center">
+  <img src="app/assets/icon.png" alt="Switchipedia App Icon" width="120" />
+</div>
+
 Switchipedia is a cross-platform application for browsing and exploring mechanical keyboard switches. This project consists of a NestJS backend API and a React Native mobile app built with Expo.
 
 ## Project Structure
@@ -42,7 +46,7 @@ Switchipedia is a cross-platform application for browsing and exploring mechanic
    ```bash
    # Development mode
    yarn start:dev
-   
+
    # Production mode
    yarn build
    yarn start:prod
@@ -74,10 +78,10 @@ Switchipedia is a cross-platform application for browsing and exploring mechanic
    ```bash
    # For iOS
    yarn ios
-   
+
    # For Android
    yarn android
-   
+
    # For web
    yarn web
    ```
@@ -112,6 +116,16 @@ Follow the Expo documentation for building and publishing your application:
 3. Commit your changes: `git commit -m 'Add some amazing feature'`
 4. Push to the branch: `git push origin feature/amazing-feature`
 5. Open a Pull Request
+
+## App Screenshots
+
+<div style="display: flex; flex-direction: row; flex-wrap: wrap; gap: 10px; justify-content: center">
+  <img src="app/assets/apps/1.png" alt="Screenshot 1" width="200" />
+  <img src="app/assets/apps/2.png" alt="Screenshot 2" width="200" />
+  <img src="app/assets/apps/3.png" alt="Screenshot 3" width="200" />
+  <img src="app/assets/apps/4.png" alt="Screenshot 4" width="200" />
+  <img src="app/assets/apps/5.png" alt="Screenshot 5" width="200" />
+</div>
 
 ## License
 
